@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Открытка 💜</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:"Comic Sans MS",cursive;
+    background: linear-gradient(135deg,#ff9ad5,#c77dff,#7b2cbf);
+    overflow:hidden;
+}
+
+/* КОНВЕРТ */
+.envelope{
+    width:320px;
+    height:220px;
+    background:linear-gradient(145deg,#ff6ec7,#b5179e);
+    border-radius:20px;
+    position:relative;
+    cursor:pointer;
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+.envelope::after{
+    content:"💌 Нажми на меня";
+    position:absolute;
+    bottom:20px;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-weight:bold;
+}
+
+.flap{
+    position:absolute;
+    width:100%;
+    height:0;
+    background:#7209b7;
+    border-radius:20px 20px 0 0;
+    transform-origin:top;
+    transition:0.6s;
+}
+
+.envelope.open .flap{
+    height:110px;
+    transform:rotateX(180deg);
+}
+
+/* КАРТОЧКА */
+.card{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0.5);
+    background:white;
+    border-radius:30px;
+    padding:20px;
+    width:260px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+    opacity:0;
+    transition:0.4s;
+}
+
+.card img{
+    width:100%;
+    border-radius:20px;
+}
+
+.card p{
+    margin-top:10px;
+    font-weight:bold;
+    color:#b5179e;
+}
+
+/* ВЫЛЕТ */
+.card.fly{
+    transform:translate(-50%,-120%) scale(1);
+    opacity:1;
+}
+
+/* СКИП */
+.card.slide{
+    transform:translate(200%,-50%) rotate(10deg);
+    opacity:0;
+}
+
+/* СЕРДЕЧКИ */
+.heart{
+    position:fixed;
+    font-size:20px;
+    animation:floatUp 4s linear forwards;
+    pointer-events:none;
+}
+
+@keyframes floatUp{
+    0%{transform:translateY(0);opacity:1;}
+    100%{transform:translateY(-200px);opacity:0;}
+}
+
+/* ФИНАЛ */
+.final{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:40px;
+    font-weight:bold;
+    color:white;
+    text-align:center;
+}
+
+.final-img{
+    position:fixed;
+    width:80px;
+    height:80px;
+    border-radius:15px;
+    object-fit:cover;
+}
+</style>
+</head>
+
+<body>
+
+<div class="envelope" id="env">
+    <div class="flap"></div>
+</div>
+
+<script>
+const totalPhotos = 10;
+
+// фотки
+let photos = [];
+for (let i = 1; i <= totalPhotos; i++) {
+    photos.push(`photo/${i}.jpg`);
+}
+
+// ТВОИ ТЕКСТЫ (можешь менять)
+let texts = [
+    "Ты самый лучший 💖",
+    "Улыбайся чаще 😊",
+    "Ты космос 🚀",
+    "Ты топ 🔥",
+    "Люблю тебя 💜",
+    "Ты делаешь мир лучше ✨",
+    "Самый крутой 😎",
+    "Ты легенда 🏆",
+    "Горжусь тобой 🙌",
+    "С днём рождения 🎉"
+];
+
+// перемешка
+function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){
+        let j=Math.floor(Math.random()*(i+1));
+        [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+}
+
+shuffle(photos);
+shuffle(texts);
+
+let index=0;
+let opened=false;
+
+/* ЗВУК */
+function playSound(){
+    try{
+        const ctx=new AudioContext();
+        const buffer=ctx.createBuffer(1,4096,ctx.sampleRate);
+        const data=buffer.getChannelData(0);
+
+        for(let i=0;i<4096;i++){
+            data[i]=Math.random()*2-1;
+        }
+
+        const src=ctx.createBufferSource();
+        src.buffer=buffer;
+
+        const gain=ctx.createGain();
+        gain.gain.value=0.2;
+
+        src.connect(gain);
+        gain.connect(ctx.destination);
+        src.start();
+
+        setTimeout(()=>ctx.close(),200);
+    }catch(e){}
+}
+
+/* СЕРДЕЧКИ */
+function spawnHeart(){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="💜";
+
+    h.style.left=Math.random()*100+"vw";
+    h.style.top="80vh";
+
+    document.body.appendChild(h);
+
+    setTimeout(()=>h.remove(),4000);
+}
+setInterval(spawnHeart,300);
+
+/* ПОКАЗ ФОТО */
+function showCard(){
+    if(index >= photos.length){
+        showFinal();
+        return;
+    }
+
+    const c=document.createElement("div");
+    c.className="card";
+
+    c.innerHTML=`
+        <img src="${photos[index]}">
+        <p>${texts[index]}</p>
+    `;
+
+    document.body.appendChild(c);
+
+    setTimeout(()=>{
+        c.classList.add("fly");
+    },50);
+
+    c.onclick=()=>{
+        c.classList.add("slide");
+        setTimeout(()=>{
+            c.remove();
+            index++;
+            showCard();
+        },400);
+    }
+}
+
+/* ФИНАЛ */
+function showFinal(){
+    const final=document.createElement("div");
+    final.className="final";
+    final.innerText="🎉 С ДНЁМ РОЖДЕНИЯ 🎉";
+
+    document.body.appendChild(final);
+
+    photos.forEach((p,i)=>{
+        const img=document.createElement("img");
+        img.src=p;
+        img.className="final-img";
+
+        const angle=(i/photos.length)*360;
+        const r=150;
+
+        const x=Math.cos(angle*Math.PI/180)*r;
+        const y=Math.sin(angle*Math.PI/180)*r;
+
+        img.style.left=`calc(50% + ${x}px)`;
+        img.style.top=`calc(50% + ${y}px)`;
+
+        document.body.appendChild(img);
+    });
+}
+
+/* ОТКРЫТИЕ */
+document.getElementById("env").onclick=()=>{
+    if(opened) return;
+
+    opened=true;
+
+    playSound();
+
+    document.getElementById("env").classList.add("open");
+
+    setTimeout(()=>{
+        document.getElementById("env").remove();
+        showCard();
+    },500);
+}
+</script>
+
+</body>
+</html>
