@@ -1,289 +1,1105 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Открытка 💜</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🌸 Открытка | С днём рождения, Элина! 🌸</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
+        body {
+            background: black;
+            overflow: hidden;
+            font-family: 'Courier New', 'Fira Code', 'Consolas', monospace;
+        }
 
-body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:"Comic Sans MS",cursive;
-    background: linear-gradient(135deg,#ff9ad5,#c77dff,#7b2cbf);
-    overflow:hidden;
-}
+        /* ========== СТИЛИ ДЛЯ ТЕРМИНАЛА ========== */
+        .terminal-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease, visibility 1.5s ease;
+        }
 
-/* КОНВЕРТ */
-.envelope{
-    width:320px;
-    height:220px;
-    background:linear-gradient(145deg,#ff6ec7,#b5179e);
-    border-radius:20px;
-    position:relative;
-    cursor:pointer;
-    box-shadow:0 20px 40px rgba(0,0,0,0.3);
-}
+        .terminal-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-.envelope::after{
-    content:"💌 Нажми на меня";
-    position:absolute;
-    bottom:20px;
-    width:100%;
-    text-align:center;
-    color:white;
-    font-weight:bold;
-}
+        .terminal-window {
+            width: 90%;
+            max-width: 750px;
+            background: #0c0c0c;
+            border-radius: 12px;
+            border: 1px solid #2a8a2a;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            overflow: hidden;
+        }
 
-.flap{
-    position:absolute;
-    width:100%;
-    height:0;
-    background:#7209b7;
-    border-radius:20px 20px 0 0;
-    transform-origin:top;
-    transition:0.6s;
-}
+        .terminal-bar {
+            background: #1a1a1a;
+            padding: 10px 15px;
+            border-bottom: 1px solid #2a8a2a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.envelope.open .flap{
-    height:110px;
-    transform:rotateX(180deg);
-}
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+        }
 
-/* КАРТОЧКА */
-.card{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%) scale(0.5);
-    background:white;
-    border-radius:30px;
-    padding:20px;
-    width:260px;
-    text-align:center;
-    box-shadow:0 20px 40px rgba(0,0,0,0.4);
-    opacity:0;
-    transition:0.4s;
-}
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
 
-.card img{
-    width:100%;
-    border-radius:20px;
-}
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
 
-.card p{
-    margin-top:10px;
-    font-weight:bold;
-    color:#b5179e;
-}
+        .terminal-title {
+            color: #2a8a2a;
+            font-size: 0.85rem;
+            margin-left: 10px;
+        }
 
-/* ВЫЛЕТ */
-.card.fly{
-    transform:translate(-50%,-120%) scale(1);
-    opacity:1;
-}
+        .terminal-body {
+            padding: 25px;
+            max-height: 420px;
+            overflow-y: auto;
+            background: #0a0a0a;
+        }
 
-/* СКИП */
-.card.slide{
-    transform:translate(200%,-50%) rotate(10deg);
-    opacity:0;
-}
+        .terminal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .terminal-body::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: #2a8a2a;
+            border-radius: 3px;
+        }
 
-/* СЕРДЕЧКИ */
-.heart{
-    position:fixed;
-    font-size:20px;
-    animation:floatUp 4s linear forwards;
-    pointer-events:none;
-}
+        .terminal-line {
+            color: #2eff2e;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
 
-@keyframes floatUp{
-    0%{transform:translateY(0);opacity:1;}
-    100%{transform:translateY(-200px);opacity:0;}
-}
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #2eff2e;
+            vertical-align: middle;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+        }
 
-/* ФИНАЛ */
-.final{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    font-size:40px;
-    font-weight:bold;
-    color:white;
-    text-align:center;
-}
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
 
-.final-img{
-    position:fixed;
-    width:80px;
-    height:80px;
-    border-radius:15px;
-    object-fit:cover;
-}
-</style>
+        /* ========== СТИЛИ ОСНОВНОЙ ОТКРЫТКИ ========== */
+        .main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.5s ease, visibility 1.5s ease;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .main-content.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .main-content {
+            min-height: 100vh;
+            background-image: url('japan.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Comic Neue', 'Comic Sans MS', cursive;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-content::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(245, 225, 195, 0.2) 0%, rgba(180, 130, 80, 0.15) 100%);
+            backdrop-filter: blur(1px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .washi-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(45deg, rgba(160, 120, 70, 0.05) 0px, rgba(160, 120, 70, 0.05) 2px, transparent 2px, transparent 10px);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 245, 235, 0.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid #f5cfaa;
+            cursor: pointer;
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .music-control:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            z-index: 300;
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.3));
+            transition: transform 0.1s ease;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f5cfaa;
+            background-color: #fae6cd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .avatar.walking { animation: walkShake 0.3s ease-in-out infinite; }
+        .avatar.dancing { animation: dance 0.4s ease-in-out infinite; }
+        .avatar.jumping { animation: jumpAnim 0.5s ease-out forwards; }
+        .avatar.yawning { animation: yawnAnim 2s ease-in-out forwards; }
+        .avatar.waving { animation: waveAnim 0.6s ease-in-out 3; }
+        .avatar.sleeping { animation: sleepAnim 3s ease-in-out infinite; }
+        .avatar.sad { animation: sadShake 1s ease-in-out; }
+        .avatar.excited { animation: excitedBounce 0.3s ease-in-out 3; }
+
+        @keyframes walkShake { 0%,100% { transform: translateX(0px) rotate(0deg); } 50% { transform: translateX(5px) rotate(3deg); } }
+        @keyframes dance { 0%,100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(10deg) scale(1.05); } 75% { transform: rotate(-10deg) scale(1.05); } }
+        @keyframes jumpAnim { 0% { transform: translateY(0px) scale(1); } 40% { transform: translateY(-35px) scale(1.1); } 100% { transform: translateY(0px) scale(1); } }
+        @keyframes yawnAnim { 0%,100% { transform: scale(1); } 30% { transform: scale(1.2) rotate(5deg); } 60% { transform: scale(1.2) rotate(-5deg); } }
+        @keyframes waveAnim { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(20deg); } }
+        @keyframes sleepAnim { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(0.98) translateY(2px); opacity: 0.7; } }
+        @keyframes sadShake { 0%,100% { transform: translateX(0px); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+        @keyframes excitedBounce { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+        .speech-bubble {
+            position: fixed;
+            background: rgba(255, 250, 235, 0.96);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            color: #8b4a2a;
+            font-weight: bold;
+            white-space: nowrap;
+            z-index: 301;
+            border: 2px solid #f5cfaa;
+            animation: bubbleFade 2s ease-out forwards;
+        }
+
+        @keyframes bubbleFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-15px); }
+        }
+
+        .envelope {
+            width: 340px;
+            height: 230px;
+            background: rgba(255, 245, 235, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 12px 12px 16px 16px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 20px 35px rgba(60, 30, 10, 0.3);
+            transition: all 0.3s ease;
+            z-index: 30;
+            border: 1px solid rgba(210, 160, 110, 0.7);
+        }
+
+        .envelope::before {
+            content: "✤ Открой меня ✤";
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7a4a1f;
+            font-family: monospace;
+        }
+
+        .envelope::after {
+            content: "🌸";
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 32px;
+            animation: sway 3s ease-in-out infinite;
+        }
+
+        @keyframes sway { 0%,100% { transform: translateX(-50%) rotate(-5deg); } 50% { transform: translateX(-50%) rotate(5deg); } }
+
+        .flap {
+            position: absolute;
+            width: 100%;
+            height: 0;
+            background: rgba(245, 235, 215, 0.9);
+            border-radius: 12px 12px 0 0;
+            transform-origin: top;
+            transition: transform 0.7s cubic-bezier(0.2, 1, 0.3, 1);
+            z-index: 2;
+        }
+
+        .envelope.open .flap {
+            height: 120px;
+            transform: rotateX(180deg);
+        }
+
+        .card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            width: 420px;
+            max-width: 90vw;
+            background: rgba(255, 250, 240, 0.97);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 22px 20px 28px;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            cursor: pointer;
+            z-index: 150;
+            border: 1px solid rgba(210, 165, 110, 0.8);
+            box-shadow: 0 30px 45px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 28px;
+            border: 3px solid #f5d6b3;
+        }
+
+        .card p {
+            margin-top: 22px;
+            font-size: 1rem;
+            line-height: 1.55;
+            color: #5a2e12;
+            background: rgba(255, 248, 235, 0.95);
+            padding: 16px 20px;
+            border-radius: 48px;
+            display: block;
+            font-family: 'Segoe UI', 'Comic Neue', cursive;
+            font-weight: 500;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-word;
+            border: 1px solid #f5dfc0;
+        }
+
+        .counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(40, 30, 20, 0.75);
+            backdrop-filter: blur(12px);
+            color: #fae4b3;
+            padding: 8px 16px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            z-index: 150;
+            border-left: 3px solid #eab67b;
+            font-family: monospace;
+        }
+
+        .card.fly { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .card.slide { transform: translate(140%, -40%) rotate(8deg) scale(0.6); opacity: 0; transition: 0.5s ease-out; }
+
+        .sakura {
+            position: fixed;
+            font-size: 26px;
+            pointer-events: none;
+            animation: sakuraFall 5s linear forwards;
+            z-index: 200;
+        }
+
+        @keyframes sakuraFall { 0% { transform: translateY(-20vh) rotate(0deg); opacity: 0.9; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+
+        .washi-confetti {
+            position: fixed;
+            width: 10px;
+            height: 14px;
+            background: radial-gradient(ellipse at 30% 40%, #fbc490, #e2a36f);
+            pointer-events: none;
+            animation: paperFall 2.8s linear forwards;
+            z-index: 250;
+            border-radius: 2px 8px 2px 6px;
+        }
+
+        @keyframes paperFall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(540deg); opacity: 0; }
+        }
+
+        /* ========== ФИНАЛЬНЫЕ ЭФФЕКТЫ ========== */
+        .final {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            font-weight: bold;
+            color: #fff3e0;
+            text-align: center;
+            background: rgba(100, 60, 30, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 12px 25px;
+            border-radius: 80px;
+            white-space: nowrap;
+            z-index: 400;
+            border: 1px solid #ffd58c;
+            animation: finalPop 0.5s ease;
+        }
+
+        @keyframes finalPop { 0% { transform: translateX(-50%) scale(0.2); opacity: 0; } 70% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
+
+        .final-img {
+            position: fixed;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 2px solid #f7d5a3;
+            z-index: 260;
+            cursor: pointer;
+            transition: transform 0.2s;
+            animation: gentleFloat 3.5s ease-in-out infinite;
+        }
+
+        @keyframes gentleFloat { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+
+        /* Салют из букв имени "Элина" */
+        .firework-letter {
+            position: fixed;
+            font-size: 28px;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 500;
+            animation: fireworkFly 3s ease-out forwards;
+            text-shadow: 0 0 10px gold;
+        }
+
+        @keyframes fireworkFly {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            20% {
+                transform: scale(1.5) rotate(180deg);
+            }
+            100% {
+                transform: translateY(-300px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Кнопка "Посмотреть ещё раз" */
+        .restart-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #c92a2a);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            font-family: monospace;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #ff8787, #e03131);
+        }
+
+        @media (max-width: 550px) {
+            .envelope { width: 280px; height: 190px; }
+            .card { width: 350px; padding: 16px 14px 20px; }
+            .card p { font-size: 0.88rem; }
+            .avatar { width: 65px; height: 65px; bottom: 15px; left: 15px; }
+            .music-control { width: 40px; height: 40px; font-size: 20px; top: 15px; right: 15px; }
+            .restart-btn { padding: 6px 14px; font-size: 0.75rem; bottom: 10px; right: 10px; }
+            .final { top: 15px; padding: 8px 18px; font-size: 1rem; white-space: nowrap; }
+            .final-img { width: 55px; height: 55px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="envelope" id="env">
-    <div class="flap"></div>
+<!-- Терминал -->
+<div class="terminal-screen" id="terminalScreen">
+    <div class="terminal-window">
+        <div class="terminal-bar">
+            <div class="terminal-dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <div class="terminal-title">user@birthday:~</div>
+        </div>
+        <div class="terminal-body" id="terminalBody"></div>
+    </div>
+</div>
+
+<!-- Основной контент -->
+<div class="main-content" id="mainContent">
+    <div class="washi-texture"></div>
+    <div class="music-control" id="musicControl">🎵</div>
+    <div class="envelope" id="env">
+        <div class="flap"></div>
+    </div>
+    <img class="avatar" id="avatar" alt="аватар" />
 </div>
 
 <script>
-const totalPhotos = 10;
-
-// фотки
-let photos = [];
-for (let i = 1; i <= totalPhotos; i++) {
-    photos.push(`photo/${i}.jpg`);
-}
-
-// ТВОИ ТЕКСТЫ (можешь менять)
-let texts = [
-    "Ты самый лучший 💖",
-    "Улыбайся чаще 😊",
-    "Ты космос 🚀",
-    "Ты топ 🔥",
-    "Люблю тебя 💜",
-    "Ты делаешь мир лучше ✨",
-    "Самый крутой 😎",
-    "Ты легенда 🏆",
-    "Горжусь тобой 🙌",
-    "С днём рождения 🎉"
-];
-
-// перемешка
-function shuffle(arr){
-    for(let i=arr.length-1;i>0;i--){
-        let j=Math.floor(Math.random()*(i+1));
-        [arr[i],arr[j]]=[arr[j],arr[i]];
+    // ========== ТЕРМИНАЛ С ЗВУКОМ ПЕЧАТИ ==========
+    const terminalBody = document.getElementById('terminalBody');
+    const terminalScreen = document.getElementById('terminalScreen');
+    const mainContent = document.getElementById('mainContent');
+    
+    const terminalLines = [
+        "> Привет, Элина...",
+        "> ",
+        "> Сегодня твой особенный день.",
+        "> День, когда в этот мир пришёл самый прекрасный человек.",
+        "> ",
+        "> Я подготовил для тебя этот сюрприз.",
+        "> ",
+        "> Здесь внутри спрятаны мои искренние слова,",
+        "> наши фотографии и немного магии.",
+        "> ",
+        "> Нажми на конверт, когда будешь готова...",
+        "> ",
+        "> Пусть эта открытка подарит тебе улыбку. 💜"
+    ];
+    
+    let lineIndex = 0;
+    let charIndex = 0;
+    let currentLineElement = null;
+    
+    // Звук печати (как в старом терминале)
+    function playTypingSound() {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.value = 1200 + Math.random() * 200; // случайная частота для реализма
+            gain.gain.value = 0.03;
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.08);
+            osc.stop(now + 0.05);
+            setTimeout(() => ctx.close(), 100);
+        } catch(e) {}
     }
-}
-
-shuffle(photos);
-shuffle(texts);
-
-let index=0;
-let opened=false;
-
-/* ЗВУК */
-function playSound(){
-    try{
-        const ctx=new AudioContext();
-        const buffer=ctx.createBuffer(1,4096,ctx.sampleRate);
-        const data=buffer.getChannelData(0);
-
-        for(let i=0;i<4096;i++){
-            data[i]=Math.random()*2-1;
+    
+    function typeNextCharacter() {
+        if (lineIndex >= terminalLines.length) {
+            setTimeout(() => {
+                terminalScreen.classList.add('hide');
+                mainContent.classList.add('show');
+                initMainApp();
+            }, 800);
+            return;
         }
-
-        const src=ctx.createBufferSource();
-        src.buffer=buffer;
-
-        const gain=ctx.createGain();
-        gain.gain.value=0.2;
-
-        src.connect(gain);
-        gain.connect(ctx.destination);
-        src.start();
-
-        setTimeout(()=>ctx.close(),200);
-    }catch(e){}
-}
-
-/* СЕРДЕЧКИ */
-function spawnHeart(){
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerText="💜";
-
-    h.style.left=Math.random()*100+"vw";
-    h.style.top="80vh";
-
-    document.body.appendChild(h);
-
-    setTimeout(()=>h.remove(),4000);
-}
-setInterval(spawnHeart,300);
-
-/* ПОКАЗ ФОТО */
-function showCard(){
-    if(index >= photos.length){
-        showFinal();
-        return;
+        
+        const line = terminalLines[lineIndex];
+        
+        if (charIndex === 0) {
+            currentLineElement = document.createElement('div');
+            currentLineElement.className = 'terminal-line';
+            terminalBody.appendChild(currentLineElement);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+        
+        if (charIndex < line.length) {
+            // Играем звук при печати символа (кроме пробелов и пустых строк)
+            if (line[charIndex] !== ' ' && line[charIndex] !== '>') {
+                playTypingSound();
+            }
+            currentLineElement.innerHTML = line.substring(0, charIndex + 1);
+            if (charIndex + 1 === line.length && line !== "> ") {
+                const cursorSpan = document.createElement('span');
+                cursorSpan.className = 'cursor';
+                currentLineElement.appendChild(cursorSpan);
+            }
+            charIndex++;
+            const speed = (line.length > 50) ? 35 : 45;
+            setTimeout(typeNextCharacter, speed);
+        } else {
+            if (currentLineElement) {
+                const cursor = currentLineElement.querySelector('.cursor');
+                if (cursor) cursor.remove();
+            }
+            lineIndex++;
+            charIndex = 0;
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+            // Пауза между строками
+            setTimeout(typeNextCharacter, 200);
+        }
     }
-
-    const c=document.createElement("div");
-    c.className="card";
-
-    c.innerHTML=`
-        <img src="${photos[index]}">
-        <p>${texts[index]}</p>
-    `;
-
-    document.body.appendChild(c);
-
-    setTimeout(()=>{
-        c.classList.add("fly");
-    },50);
-
-    c.onclick=()=>{
-        c.classList.add("slide");
-        setTimeout(()=>{
-            c.remove();
-            index++;
-            showCard();
-        },400);
+    
+    setTimeout(() => { typeNextCharacter(); }, 300);
+    
+    // ========== ОСНОВНАЯ ЛОГИКА ==========
+    function initMainApp() {
+        let backgroundMusic = null;
+        let isMusicPlaying = false;
+        let musicInitialized = false;
+        
+        function initMusic() {
+            if (musicInitialized) return;
+            try {
+                backgroundMusic = new Audio('audio.mp3');
+                backgroundMusic.loop = true;
+                backgroundMusic.volume = 0.35;
+                backgroundMusic.load();
+                musicInitialized = true;
+            } catch(e) {}
+        }
+        
+        function startMusic() {
+            if (!musicInitialized) initMusic();
+            if (backgroundMusic && !isMusicPlaying) {
+                backgroundMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    const control = document.getElementById('musicControl');
+                    if (control) control.innerText = '🔊';
+                }).catch(e => {});
+            }
+        }
+        
+        function toggleMusic() {
+            if (!musicInitialized) initMusic();
+            if (backgroundMusic) {
+                if (isMusicPlaying) {
+                    backgroundMusic.pause();
+                    isMusicPlaying = false;
+                    const control = document.getElementById('musicControl');
+                    if (control) control.innerText = '🔇';
+                } else {
+                    backgroundMusic.play().then(() => {
+                        isMusicPlaying = true;
+                        const control = document.getElementById('musicControl');
+                        if (control) control.innerText = '🔊';
+                    }).catch(e => {});
+                }
+            }
+        }
+        
+        initMusic();
+        startMusic();
+        
+        const musicBtn = document.getElementById('musicControl');
+        if (musicBtn) musicBtn.onclick = (e) => { e.stopPropagation(); toggleMusic(); };
+        
+        document.body.addEventListener('click', function initMusicOnClick() {
+            if (!isMusicPlaying && musicInitialized && backgroundMusic) {
+                backgroundMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    const control = document.getElementById('musicControl');
+                    if (control) control.innerText = '🔊';
+                }).catch(e => {});
+            }
+            document.body.removeEventListener('click', initMusicOnClick);
+        }, { once: true });
+        
+        // Тексты
+        let texts = [
+            "🌸 Оставайся всегда такой талантливой 🌸",
+            "🍁 Ты всегда будешь моим самым любимым DataAnalyst'ом 🍁",
+            "🎋 Ты выглядишь просто невероятно, каждый раз, когда смотрю на тебя, то наполняюсь счастьем, спасибо, что ты есть! 🎋",
+            "✨ Помни, что ты совершенна и никто не годится тебе в подметки, цени себя, люби и никогда не давай в обиду! ✨",
+            "💮 Не могу перестать думать о тебе. Ты так прекрасна, что не описать словами. Когда ты рядом, я всегда теряюсь и не знаю, что сказать. 💮",
+            "🦢 Ты чудесная, красиво выглядишь и имеешь прекрасную улыбку, почаще дари ее окружающим! 🦢",
+            "🍵 Ты такая очаровательная и привлекательная. Твоя улыбка просто сногсшибательная, тебе к лицу идет любой наряд. 🍵",
+            "🎐 Моя любимая, ты самое прелестное создание на земле. Ты изящна, стройна и чиста душой 🎐",
+            "🌟 Будь всегда такой же замечательной 🌟",
+            "🎂 Люблю тебя, моя самая прекрасная девушка 🎂"
+        ];
+        
+        const totalPhotos = 10;
+        let photos = [];
+        for (let i = 1; i <= totalPhotos; i++) {
+            photos.push(`photo/${i}.jpg`);
+        }
+        
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+        shuffle(photos);
+        shuffle(texts);
+        
+        let currentIndex = 0;
+        let isOpened = false;
+        let sakuraInterval = null;
+        
+        // Аватар
+        const avatarImg = document.getElementById('avatar');
+        avatarImg.src = 'animator.jpg';
+        
+        let currentAvatarElement = null;
+        let walkInterval = null;
+        let actionInterval = null;
+        let currentX = 30;
+        let direction = 1;
+        let avatarActive = true;
+        
+        const phrases = {
+            dance: ['💃 Танцую!', '🎵 Весело!', '🕺 Йоу!', '✨ Круто!'],
+            yawn: ['😴 Зеваю...', '💤 Спать хочу...', '🌙 Устал', '😪 Отдых'],
+            wave: ['👋 Привет!', '🎋 Здорова!', '🌸 Всем привет!', '🙋 Я здесь!'],
+            sleep: ['😴 zzz...', '💤 Спокойной ночи', '🌙 Уснул...', '🛌 Баю-бай'],
+            sad: ['😢 Грустно...', '💧 Эх...', '🥺 Жалко', '😔 Обидно'],
+            excited: ['🎉 Ура!', '⭐ Отлично!', '🎊 Вау!', '💖 Супер!'],
+            click: ['🎋 Спасибо!', '🌸 Приятно!', '🍁 Класс!', '✨ Здорово!', '🦊 Йес!']
+        };
+        
+        function showSpeechBubble(text) {
+            if (!currentAvatarElement) return;
+            const rect = currentAvatarElement.getBoundingClientRect();
+            const bubble = document.createElement('div');
+            bubble.className = 'speech-bubble';
+            bubble.innerText = text;
+            bubble.style.left = (rect.left - 10) + 'px';
+            bubble.style.top = (rect.top - 48) + 'px';
+            document.body.appendChild(bubble);
+            setTimeout(() => bubble.remove(), 2000);
+        }
+        
+        function playSound(freq = 880, duration = 0.2, type = 'sine') {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = type;
+                osc.frequency.value = freq;
+                gain.gain.value = 0.08;
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+                osc.stop(ctx.currentTime + duration);
+                setTimeout(() => ctx.close(), duration * 1000 + 100);
+            } catch(e) {}
+        }
+        
+        function removeAllAnimations() {
+            if (!currentAvatarElement) return;
+            currentAvatarElement.classList.remove('walking', 'dancing', 'jumping', 'yawning', 'waving', 'sleeping', 'sad', 'excited');
+        }
+        
+        function performAction(action, customPhrase = null) {
+            if (!currentAvatarElement) return;
+            removeAllAnimations();
+            let soundFreq = 523;
+            let soundDuration = 0.3;
+            let phraseList = phrases[action] || phrases.click;
+            switch(action) {
+                case 'dance':
+                    currentAvatarElement.classList.add('dancing');
+                    soundFreq = 659; soundDuration = 0.4;
+                    showSpeechBubble(customPhrase || phraseList[Math.floor(Math.random() * phraseList.length)]);
+                    playSound(soundFreq, soundDuration, 'sine');
+                    setTimeout(() => { if (currentAvatarElement) currentAvatarElement.classList.remove('dancing'); }, 2000);
+                    break;
+                case 'yawn':
+                    currentAvatarElement.classList.add('yawning');
+                    soundFreq = 392;
+                    showSpeechBubble(customPhrase || phraseList[Math.floor(Math.random() * phraseList.length)]);
+                    playSound(soundFreq, 1.2, 'sine');
+                    setTimeout(() => { if (currentAvatarElement) currentAvatarElement.classList.remove('yawning'); }, 2000);
+                    break;
+                case 'wave':
+                    currentAvatarElement.classList.add('waving');
+                    soundFreq = 587;
+                    showSpeechBubble(customPhrase || phraseList[Math.floor(Math.random() * phraseList.length)]);
+                    playSound(soundFreq, 0.2, 'triangle');
+                    setTimeout(() => { if (currentAvatarElement) currentAvatarElement.classList.remove('waving'); }, 1800);
+                    break;
+                case 'sleep':
+                    currentAvatarElement.classList.add('sleeping');
+                    showSpeechBubble(customPhrase || phraseList[Math.floor(Math.random() * phraseList.length)]);
+                    setTimeout(() => { if (currentAvatarElement) currentAvatarElement.classList.remove('sleeping'); }, 3500);
+                    break;
+                case 'sad':
+                    currentAvatarElement.classList.add('sad');
+                    soundFreq = 349;
+                    showSpeechBubble(customPhrase || phraseList[Math.floor(Math.random() * phraseList.length)]);
+                    playSound(soundFreq, 0.8, 'sine');
+                    setTimeout(() => { if (currentAvatarElement) currentAvatarElement.classList.remove('sad'); }, 1500);
+                    break;
+                case 'excited':
+                    currentAvatarElement.classList.add('excited');
+                    soundFreq = 880;
+                    showSpeechBubble(customPhrase || phraseList[Math.floor(Math.random() * phraseList.length)]);
+                    playSound(soundFreq, 0.2, 'square');
+                    setTimeout(() => { if (currentAvatarElement) currentAvatarElement.classList.remove('excited'); }, 1000);
+                    break;
+                case 'jump':
+                    currentAvatarElement.classList.add('jumping');
+                    playSound(740, 0.25, 'sine');
+                    setTimeout(() => { if (currentAvatarElement) currentAvatarElement.classList.remove('jumping'); }, 500);
+                    break;
+            }
+        }
+        
+        function startRandomActions() {
+            if (actionInterval) clearInterval(actionInterval);
+            actionInterval = setInterval(() => {
+                if (!avatarActive || document.querySelector('.final')) return;
+                const actions = ['dance', 'yawn', 'wave', 'excited'];
+                const randomAction = actions[Math.floor(Math.random() * actions.length)];
+                performAction(randomAction);
+            }, 13000);
+        }
+        
+        function startWalking() {
+            if (walkInterval) clearInterval(walkInterval);
+            walkInterval = setInterval(() => {
+                if (!avatarActive || !currentAvatarElement || document.querySelector('.final')) return;
+                let newX = currentX + direction * 4;
+                const maxX = window.innerWidth - 90;
+                const minX = 10;
+                if (newX >= maxX) {
+                    newX = maxX; direction = -1;
+                    currentAvatarElement.style.transform = 'scaleX(-1)';
+                    performAction('excited', '🌅 Пришёл!');
+                } else if (newX <= minX) {
+                    newX = minX; direction = 1;
+                    currentAvatarElement.style.transform = 'scaleX(1)';
+                    performAction('excited', '🌸 Вернулся!');
+                }
+                currentX = newX;
+                currentAvatarElement.style.left = currentX + 'px';
+                currentAvatarElement.classList.add('walking');
+                playSound(523, 0.08, 'triangle');
+                setTimeout(() => { if (currentAvatarElement) currentAvatarElement.classList.remove('walking'); }, 200);
+            }, 2300);
+        }
+        
+        function initAvatarLogic(avatarElement) {
+            currentAvatarElement = avatarElement;
+            avatarElement.style.position = 'fixed';
+            avatarElement.style.bottom = '30px';
+            avatarElement.style.left = '30px';
+            avatarElement.style.cursor = 'pointer';
+            avatarElement.style.transition = 'left 0.2s linear';
+            startWalking();
+            startRandomActions();
+            avatarElement.onclick = (e) => {
+                e.stopPropagation();
+                const actions = ['jump', 'dance', 'excited', 'wave'];
+                const randomAction = actions[Math.floor(Math.random() * actions.length)];
+                performAction(randomAction);
+                const rect = avatarElement.getBoundingClientRect();
+                burstSparklesAround(rect.left + rect.width/2, rect.top + rect.height/2);
+            };
+            window.addEventListener('resize', () => {
+                if (currentAvatarElement) {
+                    let newX = Math.min(currentX, window.innerWidth - 90);
+                    newX = Math.max(newX, 10);
+                    currentX = newX;
+                    currentAvatarElement.style.left = currentX + 'px';
+                }
+            });
+        }
+        
+        avatarImg.onerror = function() {
+            const fallbackDiv = document.createElement('div');
+            fallbackDiv.className = 'avatar';
+            fallbackDiv.id = 'avatar';
+            fallbackDiv.innerText = '🦊';
+            fallbackDiv.style.display = 'flex';
+            fallbackDiv.style.alignItems = 'center';
+            fallbackDiv.style.justifyContent = 'center';
+            fallbackDiv.style.fontSize = '52px';
+            fallbackDiv.style.background = '#fae6cd';
+            avatarImg.parentNode.replaceChild(fallbackDiv, avatarImg);
+            initAvatarLogic(fallbackDiv);
+        };
+        if (avatarImg.complete && avatarImg.naturalHeight !== 0) initAvatarLogic(avatarImg);
+        else avatarImg.onload = () => initAvatarLogic(avatarImg);
+        
+        function burstSparklesAround(x, y) {
+            for (let i = 0; i < 12; i++) {
+                const sp = document.createElement('div');
+                sp.innerText = ['✨', '⭐', '💫', '🌸', '🎋'][Math.floor(Math.random() * 5)];
+                sp.style.position = 'fixed';
+                sp.style.left = (x + (Math.random() - 0.5) * 55) + 'px';
+                sp.style.top = (y + (Math.random() - 0.5) * 45) + 'px';
+                sp.style.fontSize = (14 + Math.random() * 14) + 'px';
+                sp.style.pointerEvents = 'none';
+                sp.style.zIndex = '999';
+                sp.style.animation = 'sakuraFall 1s ease-out forwards';
+                document.body.appendChild(sp);
+                setTimeout(() => sp.remove(), 1000);
+            }
+        }
+        
+        function playKotoSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = "sine";
+                osc.frequency.value = 523.25;
+                gain.gain.value = 0.08;
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
+                osc.stop(ctx.currentTime + 0.5);
+                setTimeout(() => {
+                    const osc2 = ctx.createOscillator();
+                    const gain2 = ctx.createGain();
+                    osc2.type = "sine";
+                    osc2.frequency.value = 659.25;
+                    gain2.gain.value = 0.05;
+                    osc2.connect(gain2);
+                    gain2.connect(ctx.destination);
+                    osc2.start();
+                    gain2.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.0);
+                    osc2.stop(ctx.currentTime + 0.8);
+                }, 150);
+                setTimeout(() => ctx.close(), 1300);
+            } catch(e) {}
+        }
+        
+        function spawnSakura() {
+            const petal = document.createElement("div");
+            petal.className = "sakura";
+            const petals = ["🌸", "🌺", "🍂", "🍁", "🌸", "✨"];
+            petal.innerText = petals[Math.floor(Math.random() * petals.length)];
+            petal.style.left = Math.random() * 100 + "vw";
+            petal.style.top = "-20px";
+            petal.style.fontSize = (Math.random() * 18 + 18) + "px";
+            petal.style.animationDuration = 3 + Math.random() * 4 + "s";
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 5000);
+        }
+        
+        function startSakuraRain() {
+            if (sakuraInterval) clearInterval(sakuraInterval);
+            sakuraInterval = setInterval(() => {
+                if (!document.querySelector(".final")) {
+                    for (let i = 0; i < 2; i++) spawnSakura();
+                }
+            }, 380);
+        }
+        
+        function typeWriter(element, text, speed = 30) {
+            let i = 0;
+            element.innerText = "";
+            function type() {
+                if (i < text.length) {
+                    element.innerText += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+        
+        // ========== САЛЮТ ИЗ ИМЕНИ "ЭЛИНА" ==========
+        function startFirework() {
+            const letters = ['Э', 'Л', 'И', 'Н', 'А'];
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const letter = letters[Math.floor(Math.random() * letters.length)];
+                    const el = document.createElement('div');
+                    el.className = 'firework-letter';
+                    el.innerText = letter;
+                    el.style.left = Math.random() * window.innerWidth + 'px';
+                    el.style.top = Math.random() * window.innerHeight * 0.6 + 'px';
+                    el.style.color = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bcb'][Math.floor(Math.random() * 5)];
+                    el.style.fontSize = (24 + Math.random() * 20) + 'px';
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 3000);
+                }, i * 80);
+            }
+            playKotoSound();
+        }
+        
+        // ========== ПЕРЕЗАПУСК ==========
+        function restartCard() {
+            window.location.reload();
+        }
+        
+        function showCenteredCard() {
+            if (currentIndex >= photos.length) {
+                showGrandFinale();
+                return;
+            }
+            const cardDiv = document.createElement("div");
+            cardDiv.className = "card";
+            cardDiv.innerHTML = `
+                <img src="${photos[currentIndex]}" alt="фотография" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23ffddbb\'/%3E%3Ctext x=\'50\' y=\'55\' font-size=\'18\' text-anchor=\'middle\' fill=\'%23945e2a\'%3E🌸%3C/text%3E%3C/svg%3E'">
+                <p id="msgText"></p>
+            `;
+            document.body.appendChild(cardDiv);
+            let counter = document.querySelector(".counter");
+            if (!counter) { counter = document.createElement("div"); counter.className = "counter"; document.body.appendChild(counter); }
+            counter.innerText = `📸 ${currentIndex + 1} / ${totalPhotos}`;
+            setTimeout(() => {
+                cardDiv.classList.add("fly");
+                playKotoSound();
+                const pElem = cardDiv.querySelector("p");
+                typeWriter(pElem, texts[currentIndex], 35);
+            }, 30);
+            cardDiv.onclick = (e) => {
+                e.stopPropagation();
+                const rect = cardDiv.getBoundingClientRect();
+                burstSparklesAround(rect.left + rect.width / 2, rect.top + rect.height / 3);
+                cardDiv.classList.add("slide");
+                setTimeout(() => { cardDiv.remove(); currentIndex++; showCenteredCard(); }, 420);
+            };
+        }
+        
+        function showGrandFinale() {
+            if (sakuraInterval) clearInterval(sakuraInterval);
+            if (actionInterval) clearInterval(actionInterval);
+            if (walkInterval) clearInterval(walkInterval);
+            
+            for (let i = 0; i < 80; i++) {
+                setTimeout(() => {
+                    const washi = document.createElement("div");
+                    washi.className = "washi-confetti";
+                    washi.style.left = Math.random() * window.innerWidth + "px";
+                    washi.style.top = "-20px";
+                    washi.style.width = (6 + Math.random() * 12) + "px";
+                    washi.style.height = (10 + Math.random() * 14) + "px";
+                    washi.style.background = `linear-gradient(145deg, #fbc48a, #dc9e64)`;
+                    document.body.appendChild(washi);
+                    setTimeout(() => washi.remove(), 2800);
+                }, i * 30);
+            }
+            
+            const finalDiv = document.createElement("div");
+            finalDiv.className = "final";
+            finalDiv.innerText = "🎍 С ДНЁМ РОЖДЕНИЯ, ЭЛИНА! 🎍";
+            document.body.appendChild(finalDiv);
+            playKotoSound();
+            setTimeout(() => playKotoSound(), 400);
+            
+            const restartBtn = document.createElement('button');
+            restartBtn.className = 'restart-btn';
+            restartBtn.innerText = '🔄 Посмотреть ещё раз';
+            restartBtn.onclick = () => { restartCard(); };
+            document.body.appendChild(restartBtn);
+            
+            const radius = Math.min(160, window.innerWidth * 0.22);
+            photos.forEach((src, idx) => {
+                const img = document.createElement("img");
+                img.src = src;
+                img.className = "final-img";
+                const angle = (idx / photos.length) * 360;
+                const rad = angle * Math.PI / 180;
+                const xOff = Math.cos(rad) * radius;
+                const yOff = Math.sin(rad) * radius;
+                img.style.left = `calc(50% + ${xOff}px - 35px)`;
+                img.style.top = `calc(50% + ${yOff}px - 35px)`;
+                img.style.animationDelay = `${idx * 0.1}s`;
+                img.onclick = () => { burstSparklesAround(parseFloat(img.style.left) + 35, parseFloat(img.style.top) + 35); playKotoSound(); };
+                document.body.appendChild(img);
+            });
+            
+            setTimeout(() => startFirework(), 500);
+            
+            const finalSakura = setInterval(() => { if (document.querySelector(".final")) spawnSakura(); else clearInterval(finalSakura); }, 500);
+            setTimeout(() => clearInterval(finalSakura), 17000);
+        }
+        
+        const envelope = document.getElementById("env");
+        envelope.onclick = () => {
+            if (isOpened) return;
+            isOpened = true;
+            playKotoSound();
+            envelope.classList.add("open");
+            startSakuraRain();
+            const rect = envelope.getBoundingClientRect();
+            burstSparklesAround(rect.left + rect.width / 2, rect.top + rect.height / 3);
+            setTimeout(() => { envelope.remove(); showCenteredCard(); }, 680);
+        };
+        
+        setTimeout(() => { if (!isOpened) setInterval(() => spawnSakura(), 2300); }, 800);
     }
-}
-
-/* ФИНАЛ */
-function showFinal(){
-    const final=document.createElement("div");
-    final.className="final";
-    final.innerText="🎉 С ДНЁМ РОЖДЕНИЯ 🎉";
-
-    document.body.appendChild(final);
-
-    photos.forEach((p,i)=>{
-        const img=document.createElement("img");
-        img.src=p;
-        img.className="final-img";
-
-        const angle=(i/photos.length)*360;
-        const r=150;
-
-        const x=Math.cos(angle*Math.PI/180)*r;
-        const y=Math.sin(angle*Math.PI/180)*r;
-
-        img.style.left=`calc(50% + ${x}px)`;
-        img.style.top=`calc(50% + ${y}px)`;
-
-        document.body.appendChild(img);
-    });
-}
-
-/* ОТКРЫТИЕ */
-document.getElementById("env").onclick=()=>{
-    if(opened) return;
-
-    opened=true;
-
-    playSound();
-
-    document.getElementById("env").classList.add("open");
-
-    setTimeout(()=>{
-        document.getElementById("env").remove();
-        showCard();
-    },500);
-}
 </script>
-
 </body>
 </html>
