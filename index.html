@@ -18,7 +18,7 @@
             font-family: 'Courier New', 'Fira Code', 'Consolas', monospace;
         }
 
-        /* ========== СТИЛИ ДЛЯ ТЕРМИНАЛА ========== */
+        /* ========== СТИЛИ ДЛЯ ТЕРМИНАЛА (чёрный с белым неоном) ========== */
         .terminal-screen {
             position: fixed;
             top: 0;
@@ -387,8 +387,8 @@
 
         .final-img {
             position: fixed;
-            width: 65px;
-            height: 65px;
+            width: 70px;
+            height: 70px;
             border-radius: 20px;
             object-fit: cover;
             border: 2px solid #f7d5a3;
@@ -402,7 +402,7 @@
 
         .firework-letter {
             position: fixed;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: bold;
             pointer-events: none;
             z-index: 500;
@@ -423,9 +423,9 @@
             background: linear-gradient(135deg, #ff6b6b, #c92a2a);
             color: white;
             border: none;
-            padding: 8px 18px;
+            padding: 10px 20px;
             border-radius: 50px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: bold;
             cursor: pointer;
             z-index: 500;
@@ -439,45 +439,53 @@
         /* ========== ФИНАЛЬНАЯ ПАНЕЛЬ С ПОЖЕЛАНИЯМИ ========== */
         .final-wishes {
             position: fixed;
-            bottom: 30%;
-            left: 50%;
-            transform: translateX(-50%);
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 260px;
+            max-width: 30vw;
             background: rgba(10, 10, 15, 0.95);
             backdrop-filter: blur(15px);
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 20px 30px;
+            border-radius: 24px;
+            border-right: 3px solid #ffffff;
+            padding: 16px 14px;
             z-index: 450;
-            text-align: center;
-            max-width: 80vw;
-            animation: fadeInUp 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-family: 'Courier New', monospace;
+            animation: slideInRight 0.5s ease;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(50px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateY(-50%) translateX(50px); }
+            to { opacity: 1; transform: translateY(-50%) translateX(0); }
         }
 
         .final-wishes h3 {
             color: #ffffff;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
             letter-spacing: 2px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            display: inline-block;
+            width: 100%;
+            padding-bottom: 6px;
         }
 
         .final-wishes-content {
             color: #eeeeee;
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 0.8rem;
+            line-height: 1.5;
             font-family: 'Courier New', monospace;
-            max-height: 200px;
+            max-height: 280px;
             overflow-y: auto;
-            padding-right: 10px;
+            padding-right: 8px;
         }
 
         .final-wishes-content p {
             margin-bottom: 8px;
             animation: fadeInMsg 0.3s ease;
+            word-break: break-word;
         }
 
         @keyframes fadeInMsg {
@@ -487,20 +495,25 @@
 
         .close-wishes {
             margin-top: 15px;
-            padding: 6px 20px;
-            background: rgba(255,255,255,0.2);
+            padding: 5px 16px;
+            background: rgba(255,255,255,0.15);
             border: none;
             border-radius: 50px;
             color: white;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             transition: 0.2s;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .close-wishes:hover {
-            background: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.3);
         }
 
+        /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
         @media (max-width: 600px) {
             .envelope { width: 280px; height: 190px; }
             .card { width: 85vw; max-width: 85vw; padding: 14px 12px 18px; }
@@ -513,9 +526,39 @@
             .firework-letter { font-size: 20px; }
             .terminal-body { padding: 18px; }
             .terminal-line { font-size: 0.85rem; }
-            .final-wishes { padding: 12px 20px; bottom: 25%; }
-            .final-wishes h3 { font-size: 1rem; }
-            .final-wishes-content { font-size: 0.8rem; max-height: 150px; }
+            
+            /* На телефоне панель пожеланий уходит вниз (в конец) */
+            .final-wishes {
+                top: auto;
+                bottom: 90px;
+                right: 10px;
+                left: auto;
+                transform: translateY(0);
+                width: 200px;
+                max-width: 40vw;
+                padding: 10px 12px;
+                animation: slideInUp 0.5s ease;
+                border-right: none;
+                border-bottom: 3px solid #ffffff;
+                border-radius: 20px;
+            }
+            .final-wishes h3 { font-size: 0.7rem; margin-bottom: 8px; }
+            .final-wishes-content { font-size: 0.7rem; max-height: 150px; }
+            
+            @keyframes slideInUp {
+                from { opacity: 0; transform: translateY(50px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .final-wishes {
+                width: 170px;
+                bottom: 80px;
+                right: 8px;
+                padding: 8px 10px;
+            }
+            .final-wishes-content { font-size: 0.65rem; max-height: 120px; }
         }
     </style>
 </head>
@@ -981,7 +1024,7 @@
             playKotoSound();
         }
         
-        // ========== ПОКАЗ ФИНАЛЬНЫХ ПОЖЕЛАНИЙ ==========
+        // ========== ФИНАЛЬНЫЕ ПОЖЕЛАНИЯ (СБОКУ НА КОМПЕ, ВНИЗУ НА ТЕЛЕФОНЕ) ==========
         function showFinalWishes() {
             const wishesList = [
                 "✨ Пусть каждый день приносит радость ✨",
@@ -1020,10 +1063,10 @@
                     if (charIndex < wishesList[wishIndex].length) {
                         p.innerHTML += wishesList[wishIndex].charAt(charIndex);
                         charIndex++;
-                        setTimeout(typeChar, 40);
+                        setTimeout(typeChar, 35);
                     } else {
                         wishIndex++;
-                        setTimeout(typeNextWish, 800);
+                        setTimeout(typeNextWish, 600);
                     }
                     contentDiv.scrollTop = contentDiv.scrollHeight;
                 }
@@ -1034,7 +1077,8 @@
             
             const closeBtn = document.getElementById('closeWishesBtn');
             closeBtn.onclick = () => {
-                wishesDiv.remove();
+                wishesDiv.style.opacity = '0';
+                setTimeout(() => wishesDiv.remove(), 300);
             };
         }
         
@@ -1114,10 +1158,10 @@
             });
             
             setTimeout(() => startFirework(), 500);
-            setTimeout(() => showFinalWishes(), 1500);
+            setTimeout(() => showFinalWishes(), 1200);
             
             const finalSakura = setInterval(() => { spawnSakura(); }, 500);
-            setTimeout(() => clearInterval(finalSakura), 20000);
+            setTimeout(() => clearInterval(finalSakura), 22000);
         }
         
         const envelope = document.getElementById("env");
