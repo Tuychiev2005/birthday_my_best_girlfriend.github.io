@@ -242,54 +242,6 @@
             100% { opacity: 0; transform: translateY(-15px); }
         }
 
-        /* Окошко с пожеланиями - по умолчанию справа вверху */
-        .wishes-panel {
-            position: fixed;
-            top: 90px;
-            right: 20px;
-            width: 260px;
-            background: rgba(10, 10, 15, 0.92);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border-left: 3px solid #ffffff;
-            padding: 12px 16px;
-            z-index: 350;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            font-family: 'Courier New', monospace;
-        }
-
-        .wishes-panel h3 {
-            color: #ffffff;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            display: inline-block;
-            padding-bottom: 3px;
-            text-shadow: 0 0 3px rgba(255,255,255,0.3);
-        }
-
-        .wishes-content {
-            min-height: 100px;
-            max-height: 160px;
-            overflow-y: auto;
-            color: #eeeeee;
-            font-size: 0.8rem;
-            line-height: 1.45;
-            font-family: 'Courier New', monospace;
-        }
-
-        .wishes-content p {
-            margin-bottom: 6px;
-            animation: fadeInMsg 0.3s ease;
-            text-shadow: 0 0 2px rgba(255,255,255,0.2);
-        }
-
-        @keyframes fadeInMsg {
-            from { opacity: 0; transform: translateX(10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
         .envelope {
             width: 340px;
             height: 230px;
@@ -349,7 +301,7 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0.7);
             width: 380px;
-            max-width: 80vw;
+            max-width: 85vw;
             background: rgba(255, 250, 240, 0.97);
             backdrop-filter: blur(12px);
             border-radius: 40px;
@@ -484,45 +436,86 @@
 
         .restart-btn:hover { transform: scale(1.05); }
 
-        /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+        /* ========== ФИНАЛЬНАЯ ПАНЕЛЬ С ПОЖЕЛАНИЯМИ ========== */
+        .final-wishes {
+            position: fixed;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 20px 30px;
+            z-index: 450;
+            text-align: center;
+            max-width: 80vw;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(50px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .final-wishes h3 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .final-wishes-content {
+            color: #eeeeee;
+            font-size: 1rem;
+            line-height: 1.6;
+            font-family: 'Courier New', monospace;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .final-wishes-content p {
+            margin-bottom: 8px;
+            animation: fadeInMsg 0.3s ease;
+        }
+
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .close-wishes {
+            margin-top: 15px;
+            padding: 6px 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        .close-wishes:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
         @media (max-width: 600px) {
             .envelope { width: 280px; height: 190px; }
             .card { width: 85vw; max-width: 85vw; padding: 14px 12px 18px; }
-            .card p { font-size: 0.85rem; padding: 10px 12px; margin-top: 14px; }
+            .card p { font-size: 0.8rem; padding: 8px 12px; margin-top: 12px; }
             .avatar { width: 60px; height: 60px; bottom: 15px; left: 15px; }
             .music-control { width: 40px; height: 40px; font-size: 20px; top: 15px; right: 15px; }
             .restart-btn { padding: 6px 14px; font-size: 0.7rem; bottom: 10px; right: 10px; }
             .counter { bottom: 10px; left: 10px; font-size: 0.6rem; padding: 4px 10px; }
-            
-            /* НА ТЕЛЕФОНЕ: панель пожеланий внизу, чтобы не перекрывать фото */
-            .wishes-panel { 
-                top: auto;
-                bottom: 100px;
-                right: 10px;
-                left: auto;
-                width: 200px;
-                max-width: 40vw;
-                padding: 8px 12px;
-            }
-            .wishes-panel h3 { font-size: 0.7rem; margin-bottom: 6px; }
-            .wishes-content { font-size: 0.7rem; min-height: 70px; max-height: 100px; }
             .final-img { width: 50px; height: 50px; }
             .firework-letter { font-size: 20px; }
             .terminal-body { padding: 18px; }
             .terminal-line { font-size: 0.85rem; }
-        }
-
-        @media (max-width: 480px) {
-            .wishes-panel { 
-                width: 170px;
-                max-width: 45vw;
-                bottom: 80px;
-                right: 8px;
-                padding: 6px 10px;
-            }
-            .wishes-panel h3 { font-size: 0.65rem; }
-            .wishes-content { font-size: 0.65rem; max-height: 80px; }
-            .card p { font-size: 0.8rem; }
+            .final-wishes { padding: 12px 20px; bottom: 25%; }
+            .final-wishes h3 { font-size: 1rem; }
+            .final-wishes-content { font-size: 0.8rem; max-height: 150px; }
         }
     </style>
 </head>
@@ -887,78 +880,6 @@
             burstSparklesAround(rect.left + rect.width/2, rect.top + rect.height/2);
         });
         
-        // ========== ТЁПЛЫЕ ПОЖЕЛАНИЯ (панель) ==========
-        const wishesPanel = document.createElement('div');
-        wishesPanel.className = 'wishes-panel';
-        wishesPanel.innerHTML = `
-            <h3>📜 Тёплые пожелания</h3>
-            <div class="wishes-content" id="wishesContent"></div>
-        `;
-        document.body.appendChild(wishesPanel);
-        
-        const wishesContent = document.getElementById('wishesContent');
-        
-        const wishesList = [
-            "✨ Пусть каждый день приносит радость ✨",
-            "🌸 Будь счастлива каждое мгновение 🌸",
-            "💖 Ты заслуживаешь только лучшего 💖",
-            "🌟 Пусть мечты сбываются легко 🌟",
-            "🍀 Я рядом, что бы ни случилось 🍀",
-            "🎵 Твоя улыбка — моя любимая музыка 🎵",
-            "💫 Ты делаешь этот мир ярче 💫",
-            "🌺 Пусть удача всегда идёт с тобой 🌺",
-            "💜 Ты — невероятный человек 💜"
-        ];
-        
-        let wishIndex = 0;
-        let currentWishChar = 0;
-        let currentWishParagraph = null;
-        let typingInterval = null;
-        
-        function typeNextWish() {
-            if (wishIndex >= wishesList.length) {
-                const finalMsg = document.createElement('p');
-                finalMsg.innerHTML = "💜 С днём рождения, моя дорогая Элина! 💜";
-                finalMsg.style.color = "#ffffff";
-                finalMsg.style.fontWeight = "bold";
-                finalMsg.style.textShadow = "0 0 4px rgba(255,255,255,0.5)";
-                wishesContent.appendChild(finalMsg);
-                wishesContent.scrollTop = wishesContent.scrollHeight;
-                if (typingInterval) clearInterval(typingInterval);
-                return;
-            }
-            
-            if (currentWishChar === 0) {
-                currentWishParagraph = document.createElement('p');
-                currentWishParagraph.innerHTML = "";
-                wishesContent.appendChild(currentWishParagraph);
-            }
-            
-            if (currentWishChar < wishesList[wishIndex].length) {
-                currentWishParagraph.innerHTML += wishesList[wishIndex].charAt(currentWishChar);
-                currentWishChar++;
-                wishesContent.scrollTop = wishesContent.scrollHeight;
-            } else {
-                wishIndex++;
-                currentWishChar = 0;
-                setTimeout(() => {
-                    typeNextWish();
-                }, 1500);
-                return;
-            }
-        }
-        
-        function startWishesTyping() {
-            if (typingInterval) clearInterval(typingInterval);
-            typingInterval = setInterval(() => {
-                typeNextWish();
-            }, 65);
-        }
-        
-        setTimeout(() => {
-            startWishesTyping();
-        }, 500);
-        
         function burstSparklesAround(x, y) {
             for (let i = 0; i < 12; i++) {
                 const sp = document.createElement('div');
@@ -1060,6 +981,63 @@
             playKotoSound();
         }
         
+        // ========== ПОКАЗ ФИНАЛЬНЫХ ПОЖЕЛАНИЙ ==========
+        function showFinalWishes() {
+            const wishesList = [
+                "✨ Пусть каждый день приносит радость ✨",
+                "🌸 Будь счастлива каждое мгновение 🌸",
+                "💖 Ты заслуживаешь только лучшего 💖",
+                "🌟 Пусть мечты сбываются легко 🌟",
+                "🍀 Я рядом, что бы ни случилось 🍀",
+                "🎵 Твоя улыбка — моя любимая музыка 🎵",
+                "💫 Ты делаешь этот мир ярче 💫",
+                "🌺 Пусть удача всегда идёт с тобой 🌺",
+                "💜 Ты — невероятный человек 💜",
+                "🎂 С днём рождения, моя дорогая Элина! 🎂"
+            ];
+            
+            const wishesDiv = document.createElement('div');
+            wishesDiv.className = 'final-wishes';
+            wishesDiv.innerHTML = `
+                <h3>📜 Тёплые пожелания 📜</h3>
+                <div class="final-wishes-content" id="finalWishesContent"></div>
+                <button class="close-wishes" id="closeWishesBtn">💜 Спасибо 💜</button>
+            `;
+            document.body.appendChild(wishesDiv);
+            
+            const contentDiv = document.getElementById('finalWishesContent');
+            let wishIndex = 0;
+            
+            function typeNextWish() {
+                if (wishIndex >= wishesList.length) return;
+                
+                const p = document.createElement('p');
+                p.innerHTML = "";
+                contentDiv.appendChild(p);
+                let charIndex = 0;
+                
+                function typeChar() {
+                    if (charIndex < wishesList[wishIndex].length) {
+                        p.innerHTML += wishesList[wishIndex].charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeChar, 40);
+                    } else {
+                        wishIndex++;
+                        setTimeout(typeNextWish, 800);
+                    }
+                    contentDiv.scrollTop = contentDiv.scrollHeight;
+                }
+                typeChar();
+            }
+            
+            typeNextWish();
+            
+            const closeBtn = document.getElementById('closeWishesBtn');
+            closeBtn.onclick = () => {
+                wishesDiv.remove();
+            };
+        }
+        
         function restartCard() {
             window.location.reload();
         }
@@ -1098,7 +1076,6 @@
             if (sakuraInterval) clearInterval(sakuraInterval);
             if (walkInterval) clearInterval(walkInterval);
             if (actionInterval) clearInterval(actionInterval);
-            if (typingInterval) clearInterval(typingInterval);
             
             for (let i = 0; i < 80; i++) {
                 setTimeout(() => {
@@ -1137,9 +1114,10 @@
             });
             
             setTimeout(() => startFirework(), 500);
+            setTimeout(() => showFinalWishes(), 1500);
             
             const finalSakura = setInterval(() => { spawnSakura(); }, 500);
-            setTimeout(() => clearInterval(finalSakura), 17000);
+            setTimeout(() => clearInterval(finalSakura), 20000);
         }
         
         const envelope = document.getElementById("env");
