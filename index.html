@@ -1,9 +1,3 @@
-Я сделал всё, как ты просил:
-1. **Убрал возможность перетаскивать аватара** — теперь он стоит на месте и не двигается
-2. **Изменил пароль на "9 марта"** (введи именно так, с пробелом или без — оба варианта работают)
-3. В секретном окне теперь написано, что нужно ввести эту дату
-
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -24,14 +18,14 @@
             font-family: 'Courier New', 'Fira Code', 'Consolas', monospace;
         }
 
-        /* Терминал */
+        /* ========== СТИЛИ ДЛЯ ТЕРМИНАЛА (ЧЁРНЫЙ С БЕЛЫМ НЕОНОМ) ========== */
         .terminal-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0a0a0a;
+            background: #000000;
             z-index: 1000;
             display: flex;
             flex-direction: column;
@@ -48,17 +42,17 @@
         .terminal-window {
             width: 90%;
             max-width: 750px;
-            background: #0c0c0c;
+            background: #0a0a0a;
             border-radius: 12px;
-            border: 1px solid #2a8a2a;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
             overflow: hidden;
         }
 
         .terminal-bar {
-            background: #1a1a1a;
+            background: #111111;
             padding: 10px 15px;
-            border-bottom: 1px solid #2a8a2a;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -66,49 +60,54 @@
 
         .terminal-dots { display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .dot.red { background: #ff5f56; }
-        .dot.yellow { background: #ffbd2e; }
-        .dot.green { background: #27c93f; }
+        .dot.red { background: #ff5f56; opacity: 0.7; }
+        .dot.yellow { background: #ffbd2e; opacity: 0.7; }
+        .dot.green { background: #27c93f; opacity: 0.7; }
 
         .terminal-title {
-            color: #2a8a2a;
-            font-size: 0.85rem;
+            color: #aaaaaa;
+            font-size: 0.8rem;
             margin-left: 10px;
+            font-family: monospace;
+            letter-spacing: 0.5px;
         }
 
         .terminal-body {
-            padding: 25px;
+            padding: 30px 28px;
             max-height: 420px;
             overflow-y: auto;
-            background: #0a0a0a;
+            background: #000000;
         }
 
         .terminal-body::-webkit-scrollbar { width: 6px; }
         .terminal-body::-webkit-scrollbar-track { background: #1a1a1a; }
-        .terminal-body::-webkit-scrollbar-thumb { background: #2a8a2a; border-radius: 3px; }
+        .terminal-body::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
 
         .terminal-line {
-            color: #2eff2e;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 10px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.65;
+            margin-bottom: 12px;
             white-space: pre-wrap;
             word-break: break-word;
+            text-shadow: 0 0 3px rgba(255,255,255,0.3);
         }
 
         .cursor {
             display: inline-block;
-            width: 10px;
+            width: 12px;
             height: 18px;
-            background-color: #2eff2e;
+            background-color: #ffffff;
             vertical-align: middle;
-            margin-left: 2px;
+            margin-left: 3px;
             animation: blink 1s step-end infinite;
+            box-shadow: 0 0 5px #ffffff;
         }
 
         @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* Основная открытка */
+        /* ========== СТИЛИ ОСНОВНОЙ ОТКРЫТКИ ========== */
         .main-content {
             opacity: 0;
             visibility: hidden;
@@ -183,7 +182,6 @@
 
         .music-control:hover { transform: scale(1.05); }
 
-        /* АВАТАР - без перетаскивания, только кликабельный */
         .avatar {
             position: fixed;
             bottom: 30px;
@@ -203,7 +201,6 @@
 
         .avatar:active { transform: scale(0.97); }
 
-        /* Анимации аватара */
         .avatar.walking { animation: walkShake 0.3s ease-in-out infinite; }
         .avatar.dancing { animation: dance 0.4s ease-in-out infinite; }
         .avatar.jumping { animation: jumpAnim 0.5s ease-out forwards; }
@@ -222,20 +219,21 @@
         @keyframes sadShake { 0%,100% { transform: translateX(0px); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
         @keyframes excitedBounce { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
 
-        /* Пузырёк с речью */
         .speech-bubble {
             position: fixed;
-            background: rgba(255, 250, 235, 0.96);
+            background: rgba(30, 30, 35, 0.95);
             backdrop-filter: blur(8px);
             border-radius: 28px;
             padding: 8px 18px;
             font-size: 0.9rem;
-            color: #8b4a2a;
+            color: #ffffff;
             font-weight: bold;
             white-space: nowrap;
             z-index: 301;
-            border: 2px solid #f5cfaa;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
             animation: bubbleFade 2s ease-out forwards;
+            font-family: monospace;
         }
 
         @keyframes bubbleFade {
@@ -245,139 +243,54 @@
             100% { opacity: 0; transform: translateY(-15px); }
         }
 
-        /* Модальное окно с паролем */
-        .modal-overlay {
+        .wishes-panel {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .password-modal {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border: 2px solid #00ff88;
-            border-radius: 30px;
-            padding: 30px 25px;
-            width: 350px;
+            bottom: 100px;
+            right: 20px;
+            width: 280px;
             max-width: 85vw;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(0,255,136,0.3);
-            animation: modalPop 0.3s ease;
+            background: rgba(10, 10, 15, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border-left: 3px solid #ffffff;
+            padding: 15px 18px;
+            z-index: 350;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            font-family: 'Courier New', monospace;
         }
 
-        @keyframes modalPop {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        .wishes-panel h3 {
+            color: #ffffff;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            display: inline-block;
+            padding-bottom: 3px;
+            text-shadow: 0 0 3px rgba(255,255,255,0.3);
         }
 
-        .password-modal h3 {
-            color: #00ff88;
-            font-family: monospace;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-        }
-
-        .password-modal .hint {
-            color: #ffaa44;
-            font-size: 1rem;
-            margin: 15px 0;
-            font-family: monospace;
-        }
-
-        .password-modal input {
-            width: 100%;
-            padding: 12px;
-            background: #0a0a1a;
-            border: 1px solid #00ff88;
-            border-radius: 50px;
-            color: #00ff88;
-            font-size: 1rem;
-            text-align: center;
-            font-family: monospace;
-            outline: none;
-        }
-
-        .password-modal input::placeholder {
-            color: #2a5a3a;
-        }
-
-        .password-modal button {
-            margin-top: 20px;
-            padding: 10px 25px;
-            background: linear-gradient(135deg, #00ff88, #00aa55);
-            border: none;
-            border-radius: 50px;
-            color: #0a0a1a;
-            font-weight: bold;
-            cursor: pointer;
-            font-family: monospace;
-            font-size: 1rem;
-            transition: transform 0.2s;
-        }
-
-        .password-modal button:hover { transform: scale(1.05); }
-
-        .error-message {
-            color: #ff6666;
-            margin-top: 15px;
-            font-size: 0.8rem;
-            font-family: monospace;
-        }
-
-        /* Секретное сообщение */
-        .secret-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #ffecb3, #ffd699);
-            border-radius: 40px;
-            padding: 25px 35px;
-            text-align: center;
-            z-index: 1100;
-            border: 3px solid #ff6b6b;
-            box-shadow: 0 0 50px rgba(255,100,100,0.5);
-            animation: secretPop 0.4s ease;
-            max-width: 85vw;
-        }
-
-        @keyframes secretPop {
-            0% { transform: translate(-50%, -50%) scale(0.2) rotate(-10deg); opacity: 0; }
-            70% { transform: translate(-50%, -50%) scale(1.05) rotate(2deg); }
-            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-        }
-
-        .secret-message h2 {
-            color: #c92a2a;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        .secret-message p {
-            color: #5a2e12;
-            font-size: 1.1rem;
+        .wishes-content {
+            min-height: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+            color: #eeeeee;
+            font-size: 0.85rem;
             line-height: 1.5;
+            font-family: 'Courier New', monospace;
         }
 
-        .secret-message button {
-            margin-top: 20px;
-            padding: 8px 20px;
-            background: #c92a2a;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.9rem;
+        .wishes-content p {
+            margin-bottom: 8px;
+            animation: fadeInMsg 0.3s ease;
+            text-shadow: 0 0 2px rgba(255,255,255,0.2);
         }
 
-        /* Конверт */
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
         .envelope {
             width: 340px;
             height: 230px;
@@ -431,7 +344,6 @@
             transform: rotateX(180deg);
         }
 
-        /* Карточка с фото */
         .card {
             position: fixed;
             top: 50%;
@@ -480,16 +392,17 @@
         .counter {
             position: fixed;
             bottom: 20px;
-            right: 20px;
-            background: rgba(40, 30, 20, 0.75);
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(12px);
-            color: #fae4b3;
+            color: #ffffff;
             padding: 8px 16px;
             border-radius: 60px;
             font-size: 0.85rem;
             z-index: 150;
-            border-left: 3px solid #eab67b;
+            border-left: 3px solid #ffffff;
             font-family: monospace;
+            text-shadow: 0 0 3px rgba(255,255,255,0.3);
         }
 
         .card.fly { transform: translate(-50%, -50%) scale(1); opacity: 1; }
@@ -521,28 +434,6 @@
             100% { transform: translateY(100vh) rotate(540deg); opacity: 0; }
         }
 
-        /* Финал */
-        .final {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: clamp(1.2rem, 5vw, 1.8rem);
-            font-weight: bold;
-            color: #fff3e0;
-            text-align: center;
-            background: rgba(100, 60, 30, 0.85);
-            backdrop-filter: blur(12px);
-            padding: 12px 25px;
-            border-radius: 80px;
-            white-space: nowrap;
-            z-index: 400;
-            border: 1px solid #ffd58c;
-            animation: finalPop 0.5s ease;
-        }
-
-        @keyframes finalPop { 0% { transform: translateX(-50%) scale(0.2); opacity: 0; } 70% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
-
         .final-img {
             position: fixed;
             width: 70px;
@@ -565,7 +456,7 @@
             pointer-events: none;
             z-index: 500;
             animation: fireworkFly 3s ease-out forwards;
-            text-shadow: 0 0 10px gold;
+            text-shadow: 0 0 10px white;
         }
 
         @keyframes fireworkFly {
@@ -601,9 +492,10 @@
             .avatar { width: 65px; height: 65px; bottom: 15px; left: 15px; }
             .music-control { width: 40px; height: 40px; font-size: 20px; top: 15px; right: 15px; }
             .restart-btn { padding: 6px 14px; font-size: 0.75rem; bottom: 10px; right: 10px; }
-            .final { top: 15px; padding: 8px 18px; font-size: 1rem; white-space: nowrap; }
+            .counter { bottom: 10px; left: 10px; font-size: 0.7rem; padding: 5px 12px; }
+            .wishes-panel { width: 250px; bottom: 80px; right: 10px; padding: 10px 14px; }
+            .wishes-content { font-size: 0.75rem; min-height: 100px; }
             .final-img { width: 55px; height: 55px; }
-            .password-modal { width: 320px; }
         }
     </style>
 </head>
@@ -635,7 +527,78 @@
 </div>
 
 <script>
-    // ========== ТЕРМИНАЛ С ЗВУКОМ ПЕЧАТИ ==========
+    // ========== НАСТРОЙКА ЗВУКА ТЕРМИНАЛА (КЛАВИАТУРА / ТИПА CMD) ==========
+    let terminalAudioContext = null;
+    let terminalSoundEnabled = true;
+
+    function initTerminalAudio() {
+        if (terminalAudioContext) return;
+        try {
+            terminalAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(e) { terminalSoundEnabled = false; }
+    }
+
+    function playTerminalTypingSound() {
+        if (!terminalSoundEnabled) return;
+        try {
+            if (!terminalAudioContext) initTerminalAudio();
+            if (!terminalAudioContext) return;
+            
+            const ctx = terminalAudioContext;
+            const now = ctx.currentTime;
+            
+            // Короткий щелчок как у механической клавиатуры / терминала
+            const gain = ctx.createGain();
+            gain.gain.value = 0.12;
+            
+            // Используем осциллятор с треугольной волной + быстрый щелчок
+            const osc = ctx.createOscillator();
+            osc.type = 'triangle';
+            osc.frequency.value = 1200 + Math.random() * 200; // случайная частота для естественности
+            
+            // Фильтр высоких частот, чтобы звук был более "сухим", как старый терминал
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'highpass';
+            filter.frequency.value = 800;
+            
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.08);
+            osc.stop(now + 0.06);
+            
+            // Не закрываем контекст, чтобы не было задержки между звуками
+        } catch(e) { terminalSoundEnabled = false; }
+    }
+    
+    function playTerminalNewlineSound() {
+        if (!terminalSoundEnabled) return;
+        try {
+            if (!terminalAudioContext) initTerminalAudio();
+            if (!terminalAudioContext) return;
+            
+            const ctx = terminalAudioContext;
+            const now = ctx.currentTime;
+            
+            const gain = ctx.createGain();
+            gain.gain.value = 0.08;
+            
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = 600;
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.12);
+            osc.stop(now + 0.1);
+        } catch(e) {}
+    }
+
+    // ========== ТЕРМИНАЛ С ПЕЧАТЬЮ ==========
     const terminalBody = document.getElementById('terminalBody');
     const terminalScreen = document.getElementById('terminalScreen');
     const mainContent = document.getElementById('mainContent');
@@ -660,29 +623,17 @@
     let charIndex = 0;
     let currentLineElement = null;
     
-    function playTypingSound() {
-        try {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = "sine";
-            osc.frequency.value = 1200 + Math.random() * 200;
-            gain.gain.value = 0.03;
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start();
-            gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.08);
-            osc.stop(ctx.currentTime + 0.05);
-            setTimeout(() => ctx.close(), 100);
-        } catch(e) {}
-    }
-    
     function typeNextCharacter() {
         if (lineIndex >= terminalLines.length) {
             setTimeout(() => {
                 terminalScreen.classList.add('hide');
                 mainContent.classList.add('show');
                 initMainApp();
+                // Закрываем аудиоконтекст терминала, чтобы не мешал
+                if (terminalAudioContext) {
+                    terminalAudioContext.close();
+                    terminalAudioContext = null;
+                }
             }, 800);
             return;
         }
@@ -694,11 +645,14 @@
             currentLineElement.className = 'terminal-line';
             terminalBody.appendChild(currentLineElement);
             terminalBody.scrollTop = terminalBody.scrollHeight;
+            if (line !== "> ") {
+                playTerminalNewlineSound();
+            }
         }
         
         if (charIndex < line.length) {
             if (line[charIndex] !== ' ' && line[charIndex] !== '>') {
-                playTypingSound();
+                playTerminalTypingSound();
             }
             currentLineElement.innerHTML = line.substring(0, charIndex + 1);
             if (charIndex + 1 === line.length && line !== "> ") {
@@ -721,6 +675,8 @@
         }
     }
     
+    // Инициализируем аудио и запускаем печать
+    initTerminalAudio();
     setTimeout(() => { typeNextCharacter(); }, 300);
     
     // ========== ОСНОВНАЯ ЛОГИКА ==========
@@ -819,7 +775,7 @@
         let isOpened = false;
         let sakuraInterval = null;
         
-        // ========== АВАТАР (только кликабельный, без перетаскивания) ==========
+        // ========== АВАТАР (ходит и говорит) ==========
         const avatar = document.getElementById('avatar');
         avatar.src = 'animator.jpg';
         
@@ -836,89 +792,10 @@
             avatar.appendChild(textNode);
         };
         
-        let clickCount = 0;
-        let clickTimeout = null;
-        
-        // ПАРОЛЬ: 9 марта
-        const CORRECT_PASSWORD = "9 марта";
-        
-        function showPasswordModal() {
-            const overlay = document.createElement('div');
-            overlay.className = 'modal-overlay';
-            overlay.innerHTML = `
-                <div class="password-modal">
-                    <h3>🔐 СЕКРЕТНЫЙ ДОСТУП 🔐</h3>
-                    <div class="hint">💡 Введите пароль:<br>— <span style="color:#ffaa44; font-size:1.2rem;">9 марта</span> —</div>
-                    <input type="text" id="secretPassword" placeholder="Введите пароль" autocomplete="off">
-                    <button id="submitPassword">🔓 ВОЙТИ</button>
-                    <div id="passwordError" class="error-message"></div>
-                </div>
-            `;
-            document.body.appendChild(overlay);
-            
-            const input = overlay.querySelector('#secretPassword');
-            const submitBtn = overlay.querySelector('#submitPassword');
-            const errorDiv = overlay.querySelector('#passwordError');
-            
-            input.focus();
-            
-            function checkPassword() {
-                const password = input.value.trim();
-                
-                if (password === CORRECT_PASSWORD || password === "9марта" || password === "9 Марта") {
-                    overlay.remove();
-                    showSecretMessage();
-                    playSound(880, 0.5, 'sine');
-                } else {
-                    errorDiv.innerText = '❌ Неверный пароль! Попробуй ещё раз ❌';
-                    input.value = '';
-                    input.style.border = '1px solid #ff6666';
-                    setTimeout(() => { input.style.border = '1px solid #00ff88'; }, 1000);
-                    playSound(300, 0.3, 'sawtooth');
-                }
-            }
-            
-            submitBtn.onclick = checkPassword;
-            input.onkeypress = (e) => { if (e.key === 'Enter') checkPassword(); };
-            
-            overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
-        }
-        
-        function showSecretMessage() {
-            const secretDiv = document.createElement('div');
-            secretDiv.className = 'secret-message';
-            secretDiv.innerHTML = `
-                <h2>🎁 СЕКРЕТ РАСКРЫТ! 🎁</h2>
-                <p>✨ Ты ввела правильный пароль! ✨<br><br>
-                💖 Ты самая удивительная девушка на свете.<br>
-                💖 Твой смех — моя любимая музыка.<br>
-                💖 А твоя улыбка — самый яркий лучик света.<br><br>
-                🌸 С днём рождения, моя дорогая Элина! 🌸<br><br>
-                📅 9 марта — навсегда в моём сердце 💜</p>
-                <button id="closeSecret">💜 Закрыть 💜</button>
-            `;
-            document.body.appendChild(secretDiv);
-            
-            const closeBtn = secretDiv.querySelector('#closeSecret');
-            closeBtn.onclick = () => secretDiv.remove();
-            
-            // Маленький фейерверк
-            for (let i = 0; i < 25; i++) {
-                setTimeout(() => {
-                    const fire = document.createElement('div');
-                    fire.innerText = ['💖', '✨', '⭐', '🌸', '🎁', '🔓'][Math.floor(Math.random() * 6)];
-                    fire.style.position = 'fixed';
-                    fire.style.left = Math.random() * window.innerWidth + 'px';
-                    fire.style.top = Math.random() * window.innerHeight + 'px';
-                    fire.style.fontSize = (20 + Math.random() * 20) + 'px';
-                    fire.style.pointerEvents = 'none';
-                    fire.style.zIndex = '999';
-                    fire.style.animation = 'sakuraFall 1.5s ease-out forwards';
-                    document.body.appendChild(fire);
-                    setTimeout(() => fire.remove(), 1500);
-                }, i * 70);
-            }
-        }
+        let walkInterval = null;
+        let actionInterval = null;
+        let currentX = 30;
+        let direction = 1;
         
         function showSpeechBubble(text) {
             const rect = avatar.getBoundingClientRect();
@@ -1002,32 +879,122 @@
             }
         }
         
-        // Обработчик кликов (5 раз для секретки)
+        function startWalking() {
+            if (walkInterval) clearInterval(walkInterval);
+            walkInterval = setInterval(() => {
+                if (!avatar || document.querySelector('.final')) return;
+                let newX = currentX + direction * 4;
+                const maxX = window.innerWidth - 90;
+                const minX = 15;
+                
+                if (newX >= maxX) {
+                    newX = maxX;
+                    direction = -1;
+                    performAction('excited', '🎉 Дошёл!');
+                } else if (newX <= minX) {
+                    newX = minX;
+                    direction = 1;
+                    performAction('excited', '🌸 Назад!');
+                }
+                currentX = newX;
+                avatar.style.left = currentX + 'px';
+                avatar.classList.add('walking');
+                setTimeout(() => avatar.classList.remove('walking'), 200);
+            }, 2300);
+        }
+        
+        function startRandomActions() {
+            if (actionInterval) clearInterval(actionInterval);
+            actionInterval = setInterval(() => {
+                if (!avatar || document.querySelector('.final')) return;
+                const actions = ['dance', 'yawn', 'wave', 'excited'];
+                const randomAction = actions[Math.floor(Math.random() * actions.length)];
+                performAction(randomAction);
+            }, 10000);
+        }
+        
+        startWalking();
+        startRandomActions();
+        
         avatar.addEventListener('click', (e) => {
             e.stopPropagation();
             if (document.querySelector('.final')) return;
-            
-            clickCount++;
-            playSound(740, 0.15, 'sine');
-            showSpeechBubble(`🔑 ${clickCount}`);
-            
-            if (clickTimeout) clearTimeout(clickTimeout);
-            clickTimeout = setTimeout(() => {
-                clickCount = 0;
-            }, 800);
-            
-            if (clickCount >= 5) {
-                clickCount = 0;
-                if (clickTimeout) clearTimeout(clickTimeout);
-                showPasswordModal();
-                performAction('excited', '🔐 Секретная дверь открыта!');
-            } else {
-                performAction('jump');
-            }
-            
+            performAction('jump');
             const rect = avatar.getBoundingClientRect();
             burstSparklesAround(rect.left + rect.width/2, rect.top + rect.height/2);
         });
+        
+        // ========== БОКОВОЕ ОКНО С ПОЖЕЛАНИЯМИ ==========
+        const wishesPanel = document.createElement('div');
+        wishesPanel.className = 'wishes-panel';
+        wishesPanel.innerHTML = `
+            <h3>📜 Тёплые пожелания</h3>
+            <div class="wishes-content" id="wishesContent"></div>
+        `;
+        document.body.appendChild(wishesPanel);
+        
+        const wishesContent = document.getElementById('wishesContent');
+        
+        const wishesList = [
+            "✨ Пусть каждый день приносит радость ✨",
+            "🌸 Будь счастлива каждое мгновение 🌸",
+            "💖 Ты заслуживаешь только лучшего 💖",
+            "🌟 Пусть мечты сбываются легко 🌟",
+            "🍀 Я рядом, что бы ни случилось 🍀",
+            "🎵 Твоя улыбка — моя любимая музыка 🎵",
+            "💫 Ты делаешь этот мир ярче 💫",
+            "🌺 Пусть удача всегда идёт с тобой 🌺",
+            "💜 Ты — невероятный человек 💜"
+        ];
+        
+        let wishIndex = 0;
+        let currentWishChar = 0;
+        let currentWishParagraph = null;
+        let typingInterval = null;
+        
+        function typeNextWish() {
+            if (wishIndex >= wishesList.length) {
+                const finalMsg = document.createElement('p');
+                finalMsg.innerHTML = "💜 С днём рождения, моя дорогая Элина! 💜";
+                finalMsg.style.color = "#ffffff";
+                finalMsg.style.fontWeight = "bold";
+                finalMsg.style.textShadow = "0 0 4px rgba(255,255,255,0.5)";
+                wishesContent.appendChild(finalMsg);
+                wishesContent.scrollTop = wishesContent.scrollHeight;
+                if (typingInterval) clearInterval(typingInterval);
+                return;
+            }
+            
+            if (currentWishChar === 0) {
+                currentWishParagraph = document.createElement('p');
+                currentWishParagraph.innerHTML = "";
+                wishesContent.appendChild(currentWishParagraph);
+            }
+            
+            if (currentWishChar < wishesList[wishIndex].length) {
+                currentWishParagraph.innerHTML += wishesList[wishIndex].charAt(currentWishChar);
+                currentWishChar++;
+                wishesContent.scrollTop = wishesContent.scrollHeight;
+            } else {
+                wishIndex++;
+                currentWishChar = 0;
+                setTimeout(() => {
+                    typeNextWish();
+                }, 1500);
+                return;
+            }
+        }
+        
+        function startWishesTyping() {
+            if (typingInterval) clearInterval(typingInterval);
+            typingInterval = setInterval(() => {
+                typeNextWish();
+            }, 60);
+        }
+        
+        setTimeout(() => {
+            startWishesTyping();
+        }, 2000);
         
         function burstSparklesAround(x, y) {
             for (let i = 0; i < 12; i++) {
@@ -1120,8 +1087,9 @@
                     el.innerText = letter;
                     el.style.left = Math.random() * window.innerWidth + 'px';
                     el.style.top = Math.random() * window.innerHeight * 0.6 + 'px';
-                    el.style.color = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bcb'][Math.floor(Math.random() * 5)];
+                    el.style.color = '#ffffff';
                     el.style.fontSize = (24 + Math.random() * 20) + 'px';
+                    el.style.textShadow = "0 0 10px white";
                     document.body.appendChild(el);
                     setTimeout(() => el.remove(), 3000);
                 }, i * 80);
@@ -1165,6 +1133,9 @@
         
         function showGrandFinale() {
             if (sakuraInterval) clearInterval(sakuraInterval);
+            if (walkInterval) clearInterval(walkInterval);
+            if (actionInterval) clearInterval(actionInterval);
+            if (typingInterval) clearInterval(typingInterval);
             
             for (let i = 0; i < 80; i++) {
                 setTimeout(() => {
@@ -1179,13 +1150,6 @@
                     setTimeout(() => washi.remove(), 2800);
                 }, i * 30);
             }
-            
-            const finalDiv = document.createElement("div");
-            finalDiv.className = "final";
-            finalDiv.innerText = "🎍 С ДНЁМ РОЖДЕНИЯ, ЭЛИНА! 🎍";
-            document.body.appendChild(finalDiv);
-            playKotoSound();
-            setTimeout(() => playKotoSound(), 400);
             
             const restartBtn = document.createElement('button');
             restartBtn.className = 'restart-btn';
@@ -1211,7 +1175,7 @@
             
             setTimeout(() => startFirework(), 500);
             
-            const finalSakura = setInterval(() => { if (document.querySelector(".final")) spawnSakura(); else clearInterval(finalSakura); }, 500);
+            const finalSakura = setInterval(() => { spawnSakura(); }, 500);
             setTimeout(() => clearInterval(finalSakura), 17000);
         }
         
@@ -1232,4 +1196,3 @@
 </script>
 </body>
 </html>
-```
