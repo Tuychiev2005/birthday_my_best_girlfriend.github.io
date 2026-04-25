@@ -20,14 +20,14 @@
   <p align="center">
     Интерактивная поздравительная открытка с терминалом, ходячим аватаром и неоновой эстетикой
     <br />
-    <a href="https://github.com/Tuychiev2005/birthday-card"><strong>Просмотреть код »</strong></a>
+    <a href="https://github.com/Tuychiev2005/birthday_my_best_girlfriend"><strong>Просмотреть код »</strong></a>
     <br />
     <br />
-    <a href="https://tuychiev2005.github.io/birthday-card">Открыть открытку</a>
+    <a href="https://tuychiev2005.github.io/birthday_my_best_girlfriend">Открыть открытку</a>
     &middot;
-    <a href="https://github.com/Tuychiev2005/birthday-card/issues/new?labels=bug&template=bug-report---.md">Сообщить об ошибке</a>
+    <a href="https://github.com/Tuychiev2005/birthday_my_best_girlfriend/issues/new?labels=bug&template=bug-report---.md">Сообщить об ошибке</a>
     &middot;
-    <a href="https://github.com/Tuychiev2005/birthday-card/issues/new?labels=enhancement&template=feature-request---.md">Предложить идею</a>
+    <a href="https://github.com/Tuychiev2005/birthday_my_best_girlfriend/issues/new?labels=enhancement&template=feature-request---.md">Предложить идею</a>
   </p>
 </div>
 
