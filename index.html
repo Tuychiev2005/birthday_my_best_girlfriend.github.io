@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>🌸 Открытка | С днём рождения, Элина! 🌸</title>
     <style>
         * {
@@ -18,7 +18,7 @@
             font-family: 'Courier New', 'Fira Code', 'Consolas', monospace;
         }
 
-        /* ========== СТИЛИ ДЛЯ ТЕРМИНАЛА (ЧЁРНЫЙ С БЕЛЫМ НЕОНОМ) ========== */
+        /* ========== СТИЛИ ДЛЯ ТЕРМИНАЛА ========== */
         .terminal-screen {
             position: fixed;
             top: 0;
@@ -69,11 +69,10 @@
             font-size: 0.8rem;
             margin-left: 10px;
             font-family: monospace;
-            letter-spacing: 0.5px;
         }
 
         .terminal-body {
-            padding: 30px 28px;
+            padding: 25px;
             max-height: 420px;
             overflow-y: auto;
             background: #000000;
@@ -243,17 +242,18 @@
             100% { opacity: 0; transform: translateY(-15px); }
         }
 
+        /* Окошко с пожеланиями - адаптировано под телефон */
         .wishes-panel {
             position: fixed;
             bottom: 100px;
             right: 20px;
             width: 280px;
-            max-width: 85vw;
+            max-width: 40vw;
             background: rgba(10, 10, 15, 0.92);
             backdrop-filter: blur(12px);
             border-radius: 20px;
             border-left: 3px solid #ffffff;
-            padding: 15px 18px;
+            padding: 12px 16px;
             z-index: 350;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             font-family: 'Courier New', monospace;
@@ -261,8 +261,8 @@
 
         .wishes-panel h3 {
             color: #ffffff;
-            font-size: 0.85rem;
-            margin-bottom: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
             letter-spacing: 1px;
             border-bottom: 1px solid rgba(255,255,255,0.3);
             display: inline-block;
@@ -271,17 +271,17 @@
         }
 
         .wishes-content {
-            min-height: 120px;
-            max-height: 200px;
+            min-height: 100px;
+            max-height: 160px;
             overflow-y: auto;
             color: #eeeeee;
-            font-size: 0.85rem;
-            line-height: 1.5;
+            font-size: 0.8rem;
+            line-height: 1.45;
             font-family: 'Courier New', monospace;
         }
 
         .wishes-content p {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             animation: fadeInMsg 0.3s ease;
             text-shadow: 0 0 2px rgba(255,255,255,0.2);
         }
@@ -350,11 +350,11 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0.7);
             width: 420px;
-            max-width: 90vw;
+            max-width: 85vw;
             background: rgba(255, 250, 240, 0.97);
             backdrop-filter: blur(12px);
             border-radius: 40px;
-            padding: 22px 20px 28px;
+            padding: 18px 16px 22px;
             text-align: center;
             opacity: 0;
             transition: all 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.2);
@@ -373,12 +373,12 @@
         }
 
         .card p {
-            margin-top: 22px;
-            font-size: 1rem;
-            line-height: 1.55;
+            margin-top: 18px;
+            font-size: 0.95rem;
+            line-height: 1.5;
             color: #5a2e12;
             background: rgba(255, 248, 235, 0.95);
-            padding: 16px 20px;
+            padding: 12px 16px;
             border-radius: 48px;
             display: block;
             font-family: 'Segoe UI', 'Comic Neue', cursive;
@@ -396,9 +396,9 @@
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(12px);
             color: #ffffff;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 60px;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             z-index: 150;
             border-left: 3px solid #ffffff;
             font-family: monospace;
@@ -436,8 +436,8 @@
 
         .final-img {
             position: fixed;
-            width: 70px;
-            height: 70px;
+            width: 65px;
+            height: 65px;
             border-radius: 20px;
             object-fit: cover;
             border: 2px solid #f7d5a3;
@@ -451,7 +451,7 @@
 
         .firework-letter {
             position: fixed;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: bold;
             pointer-events: none;
             z-index: 500;
@@ -472,9 +472,9 @@
             background: linear-gradient(135deg, #ff6b6b, #c92a2a);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 18px;
             border-radius: 50px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
             cursor: pointer;
             z-index: 500;
@@ -485,17 +485,41 @@
 
         .restart-btn:hover { transform: scale(1.05); }
 
-        @media (max-width: 550px) {
+        /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+        @media (max-width: 600px) {
             .envelope { width: 280px; height: 190px; }
-            .card { width: 350px; padding: 16px 14px 20px; }
-            .card p { font-size: 0.88rem; }
-            .avatar { width: 65px; height: 65px; bottom: 15px; left: 15px; }
+            .card { width: 85vw; padding: 14px 12px 18px; }
+            .card p { font-size: 0.85rem; padding: 10px 12px; margin-top: 14px; }
+            .avatar { width: 60px; height: 60px; bottom: 15px; left: 15px; }
             .music-control { width: 40px; height: 40px; font-size: 20px; top: 15px; right: 15px; }
             .restart-btn { padding: 6px 14px; font-size: 0.75rem; bottom: 10px; right: 10px; }
-            .counter { bottom: 10px; left: 10px; font-size: 0.7rem; padding: 5px 12px; }
-            .wishes-panel { width: 250px; bottom: 80px; right: 10px; padding: 10px 14px; }
-            .wishes-content { font-size: 0.75rem; min-height: 100px; }
-            .final-img { width: 55px; height: 55px; }
+            .counter { bottom: 10px; left: 10px; font-size: 0.65rem; padding: 4px 10px; }
+            .wishes-panel { 
+                width: 240px; 
+                max-width: 45vw;
+                bottom: 70px; 
+                right: 8px; 
+                padding: 8px 12px;
+            }
+            .wishes-panel h3 { font-size: 0.7rem; margin-bottom: 6px; }
+            .wishes-content { font-size: 0.7rem; min-height: 80px; max-height: 120px; }
+            .final-img { width: 50px; height: 50px; }
+            .firework-letter { font-size: 20px; }
+            .terminal-body { padding: 18px; }
+            .terminal-line { font-size: 0.85rem; }
+        }
+
+        @media (max-width: 400px) {
+            .wishes-panel { 
+                width: 180px;
+                max-width: 45vw;
+                bottom: 80px;
+                right: 5px;
+                padding: 6px 10px;
+            }
+            .wishes-panel h3 { font-size: 0.65rem; }
+            .wishes-content { font-size: 0.65rem; max-height: 100px; }
+            .card p { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -527,78 +551,7 @@
 </div>
 
 <script>
-    // ========== НАСТРОЙКА ЗВУКА ТЕРМИНАЛА (КЛАВИАТУРА / ТИПА CMD) ==========
-    let terminalAudioContext = null;
-    let terminalSoundEnabled = true;
-
-    function initTerminalAudio() {
-        if (terminalAudioContext) return;
-        try {
-            terminalAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-        } catch(e) { terminalSoundEnabled = false; }
-    }
-
-    function playTerminalTypingSound() {
-        if (!terminalSoundEnabled) return;
-        try {
-            if (!terminalAudioContext) initTerminalAudio();
-            if (!terminalAudioContext) return;
-            
-            const ctx = terminalAudioContext;
-            const now = ctx.currentTime;
-            
-            // Короткий щелчок как у механической клавиатуры / терминала
-            const gain = ctx.createGain();
-            gain.gain.value = 0.12;
-            
-            // Используем осциллятор с треугольной волной + быстрый щелчок
-            const osc = ctx.createOscillator();
-            osc.type = 'triangle';
-            osc.frequency.value = 1200 + Math.random() * 200; // случайная частота для естественности
-            
-            // Фильтр высоких частот, чтобы звук был более "сухим", как старый терминал
-            const filter = ctx.createBiquadFilter();
-            filter.type = 'highpass';
-            filter.frequency.value = 800;
-            
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(ctx.destination);
-            
-            osc.start();
-            gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.08);
-            osc.stop(now + 0.06);
-            
-            // Не закрываем контекст, чтобы не было задержки между звуками
-        } catch(e) { terminalSoundEnabled = false; }
-    }
-    
-    function playTerminalNewlineSound() {
-        if (!terminalSoundEnabled) return;
-        try {
-            if (!terminalAudioContext) initTerminalAudio();
-            if (!terminalAudioContext) return;
-            
-            const ctx = terminalAudioContext;
-            const now = ctx.currentTime;
-            
-            const gain = ctx.createGain();
-            gain.gain.value = 0.08;
-            
-            const osc = ctx.createOscillator();
-            osc.type = 'sine';
-            osc.frequency.value = 600;
-            
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            
-            osc.start();
-            gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.12);
-            osc.stop(now + 0.1);
-        } catch(e) {}
-    }
-
-    // ========== ТЕРМИНАЛ С ПЕЧАТЬЮ ==========
+    // ========== ТЕРМИНАЛ С ЗВУКОМ ПЕЧАТИ ==========
     const terminalBody = document.getElementById('terminalBody');
     const terminalScreen = document.getElementById('terminalScreen');
     const mainContent = document.getElementById('mainContent');
@@ -623,17 +576,29 @@
     let charIndex = 0;
     let currentLineElement = null;
     
+    function playTypingSound() {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.value = 1200 + Math.random() * 200;
+            gain.gain.value = 0.06;
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.08);
+            osc.stop(ctx.currentTime + 0.06);
+            setTimeout(() => ctx.close(), 100);
+        } catch(e) {}
+    }
+    
     function typeNextCharacter() {
         if (lineIndex >= terminalLines.length) {
             setTimeout(() => {
                 terminalScreen.classList.add('hide');
                 mainContent.classList.add('show');
                 initMainApp();
-                // Закрываем аудиоконтекст терминала, чтобы не мешал
-                if (terminalAudioContext) {
-                    terminalAudioContext.close();
-                    terminalAudioContext = null;
-                }
             }, 800);
             return;
         }
@@ -645,17 +610,14 @@
             currentLineElement.className = 'terminal-line';
             terminalBody.appendChild(currentLineElement);
             terminalBody.scrollTop = terminalBody.scrollHeight;
-            if (line !== "> ") {
-                playTerminalNewlineSound();
-            }
         }
         
         if (charIndex < line.length) {
             if (line[charIndex] !== ' ' && line[charIndex] !== '>') {
-                playTerminalTypingSound();
+                playTypingSound();
             }
             currentLineElement.innerHTML = line.substring(0, charIndex + 1);
-            if (charIndex + 1 === line.length && line !== "> ") {
+            if (charIndex + 1 === line.length && line !== "> " && line !== ">") {
                 const cursorSpan = document.createElement('span');
                 cursorSpan.className = 'cursor';
                 currentLineElement.appendChild(cursorSpan);
@@ -675,8 +637,6 @@
         }
     }
     
-    // Инициализируем аудио и запускаем печать
-    initTerminalAudio();
     setTimeout(() => { typeNextCharacter(); }, 300);
     
     // ========== ОСНОВНАЯ ЛОГИКА ==========
@@ -775,7 +735,7 @@
         let isOpened = false;
         let sakuraInterval = null;
         
-        // ========== АВАТАР (ходит и говорит) ==========
+        // ========== АВАТАР ==========
         const avatar = document.getElementById('avatar');
         avatar.src = 'animator.jpg';
         
@@ -924,7 +884,7 @@
             burstSparklesAround(rect.left + rect.width/2, rect.top + rect.height/2);
         });
         
-        // ========== БОКОВОЕ ОКНО С ПОЖЕЛАНИЯМИ ==========
+        // ========== ТЁПЛЫЕ ПОЖЕЛАНИЯ (появляются сразу после открытия) ==========
         const wishesPanel = document.createElement('div');
         wishesPanel.className = 'wishes-panel';
         wishesPanel.innerHTML = `
@@ -992,9 +952,10 @@
             }, 60);
         }
         
+        // Запускаем пожелания через 500 мс после появления открытки
         setTimeout(() => {
             startWishesTyping();
-        }, 2000);
+        }, 500);
         
         function burstSparklesAround(x, y) {
             for (let i = 0; i < 12; i++) {
