@@ -242,13 +242,12 @@
             100% { opacity: 0; transform: translateY(-15px); }
         }
 
-        /* Окошко с пожеланиями - адаптировано под телефон */
+        /* Окошко с пожеланиями - по умолчанию справа вверху */
         .wishes-panel {
             position: fixed;
-            bottom: 100px;
+            top: 90px;
             right: 20px;
-            width: 280px;
-            max-width: 40vw;
+            width: 260px;
             background: rgba(10, 10, 15, 0.92);
             backdrop-filter: blur(12px);
             border-radius: 20px;
@@ -349,8 +348,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.7);
-            width: 420px;
-            max-width: 85vw;
+            width: 380px;
+            max-width: 80vw;
             background: rgba(255, 250, 240, 0.97);
             backdrop-filter: blur(12px);
             border-radius: 40px;
@@ -488,37 +487,41 @@
         /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
         @media (max-width: 600px) {
             .envelope { width: 280px; height: 190px; }
-            .card { width: 85vw; padding: 14px 12px 18px; }
+            .card { width: 85vw; max-width: 85vw; padding: 14px 12px 18px; }
             .card p { font-size: 0.85rem; padding: 10px 12px; margin-top: 14px; }
             .avatar { width: 60px; height: 60px; bottom: 15px; left: 15px; }
             .music-control { width: 40px; height: 40px; font-size: 20px; top: 15px; right: 15px; }
-            .restart-btn { padding: 6px 14px; font-size: 0.75rem; bottom: 10px; right: 10px; }
-            .counter { bottom: 10px; left: 10px; font-size: 0.65rem; padding: 4px 10px; }
+            .restart-btn { padding: 6px 14px; font-size: 0.7rem; bottom: 10px; right: 10px; }
+            .counter { bottom: 10px; left: 10px; font-size: 0.6rem; padding: 4px 10px; }
+            
+            /* НА ТЕЛЕФОНЕ: панель пожеланий внизу, чтобы не перекрывать фото */
             .wishes-panel { 
-                width: 240px; 
-                max-width: 45vw;
-                bottom: 70px; 
-                right: 8px; 
+                top: auto;
+                bottom: 100px;
+                right: 10px;
+                left: auto;
+                width: 200px;
+                max-width: 40vw;
                 padding: 8px 12px;
             }
             .wishes-panel h3 { font-size: 0.7rem; margin-bottom: 6px; }
-            .wishes-content { font-size: 0.7rem; min-height: 80px; max-height: 120px; }
+            .wishes-content { font-size: 0.7rem; min-height: 70px; max-height: 100px; }
             .final-img { width: 50px; height: 50px; }
             .firework-letter { font-size: 20px; }
             .terminal-body { padding: 18px; }
             .terminal-line { font-size: 0.85rem; }
         }
 
-        @media (max-width: 400px) {
+        @media (max-width: 480px) {
             .wishes-panel { 
-                width: 180px;
+                width: 170px;
                 max-width: 45vw;
                 bottom: 80px;
-                right: 5px;
+                right: 8px;
                 padding: 6px 10px;
             }
             .wishes-panel h3 { font-size: 0.65rem; }
-            .wishes-content { font-size: 0.65rem; max-height: 100px; }
+            .wishes-content { font-size: 0.65rem; max-height: 80px; }
             .card p { font-size: 0.8rem; }
         }
     </style>
@@ -884,7 +887,7 @@
             burstSparklesAround(rect.left + rect.width/2, rect.top + rect.height/2);
         });
         
-        // ========== ТЁПЛЫЕ ПОЖЕЛАНИЯ (появляются сразу после открытия) ==========
+        // ========== ТЁПЛЫЕ ПОЖЕЛАНИЯ (панель) ==========
         const wishesPanel = document.createElement('div');
         wishesPanel.className = 'wishes-panel';
         wishesPanel.innerHTML = `
@@ -949,10 +952,9 @@
             if (typingInterval) clearInterval(typingInterval);
             typingInterval = setInterval(() => {
                 typeNextWish();
-            }, 60);
+            }, 65);
         }
         
-        // Запускаем пожелания через 500 мс после появления открытки
         setTimeout(() => {
             startWishesTyping();
         }, 500);
